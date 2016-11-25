@@ -27,11 +27,11 @@ function prevSibling(node, count) {
 }
 
 /**
- * props.text
- * props.maxLine
- * props.ellipsis
- * props.trimRight
- * props.className
+ * props.text {String} the text you want to clamp
+ * props.maxLine {Number|String} max lines allowed
+ * props.ellipsis {String} the ellipsis indicator
+ * props.trimRight {Boolean} should we trimRight the clamped text?
+ * props.className {String}
  */
 
 var LinesEllipsis = function (_React$Component) {
@@ -62,6 +62,11 @@ var LinesEllipsis = function (_React$Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       this.reflow(nextProps);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.canvas.parentNode.removeChild(this.canvas);
     }
   }, {
     key: 'initCanvas',
