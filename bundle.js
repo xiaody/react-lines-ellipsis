@@ -12,9 +12,19 @@ var React = require('react');
 
 var canvasStyle = {
   height: 0,
-  overflow: 'hidden'
+  overflow: 'hidden',
+  'padding-top': 0,
+  'padding-bottom': 0,
+  border: 'none'
 };
 var styleProps = ['box-sizing', 'width', 'font-size', 'font-weight', 'font-family', 'font-style', 'letter-spacing', 'text-indent', 'white-space', 'word-break', 'padding-left', 'padding-right'];
+
+function prevSibling(node, count) {
+  while (node && count--) {
+    node = node.previousElementSibling;
+  }
+  return node;
+}
 
 /**
  * props.text
@@ -86,11 +96,13 @@ var LinesEllipsis = function (_React$Component) {
   }, {
     key: 'calcIndexes',
     value: function calcIndexes() {
+      var indexes = [0];
+      var elt = this.canvas.firstElementChild;
+      if (!elt) return indexes;
+
       var index = 0;
       var line = 1;
-      var elt = this.canvas.firstElementChild;
       var offsetTop = elt.offsetTop;
-      var indexes = [0];
       while (elt = elt.nextElementSibling) {
         if (elt.offsetTop > offsetTop) {
           line++;
@@ -111,11 +123,13 @@ var LinesEllipsis = function (_React$Component) {
       var chars = this.chars.slice(0, indexes[this.maxLine]);
       this.canvas.innerHTML = chars.map(function (c, i) {
         return '<span class=\'LinesEllipsis-char\'>' + c + '</span>';
-      }).join('') + ('<span class=\'LinesEllipsis-ellipsis\'>' + this.props.ellipsis + '</span>');
+      }).join('') + ('<wbr><span class=\'LinesEllipsis-ellipsis\'>' + this.props.ellipsis + '</span>');
 
       var ndEllipsis = this.canvas.lastElementChild;
-      while (ndEllipsis.offsetHeight > ndEllipsis.previousElementSibling.offsetHeight || ndEllipsis.offsetTop > ndEllipsis.previousElementSibling.offsetTop) {
-        this.canvas.removeChild(ndEllipsis.previousElementSibling);
+      var ndPrevChar = prevSibling(ndEllipsis, 2);
+      while (ndPrevChar && (ndEllipsis.offsetHeight > ndPrevChar.offsetHeight || ndEllipsis.offsetTop > ndPrevChar.offsetTop)) {
+        this.canvas.removeChild(ndPrevChar);
+        ndPrevChar = prevSibling(ndEllipsis, 2);
         chars.pop();
       }
       return chars.length;
@@ -142,6 +156,7 @@ var LinesEllipsis = function (_React$Component) {
           }
         },
         clamped && trimRight ? text.replace(/[\s\uFEFF\xA0]+$/, '') : text,
+        React.createElement('wbr', null),
         clamped && React.createElement(
           'span',
           { className: 'LinesEllipsis-ellipsis' },

@@ -10,7 +10,8 @@
     "test": "standard",
     "build": "babel index.js > bundle.js",
     "docs": "browserify -e docs/app.js -t babelify > docs/app.bundle.js",
-    "docs:watch": "watchify -e docs/app.js -t babelify -o docs/app.bundle.js"
+    "docs:watch": "watchify -e docs/app.js -t babelify -o docs/app.bundle.js",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "react",
