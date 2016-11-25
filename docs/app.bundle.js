@@ -14,7 +14,7 @@ var ReactDOM = require('react-dom');
 var LinesEllipsis = require('../index');
 var lorem = require('./lorem');
 
-var lang = location.search.slice(1);
+var lang = window.location.search.slice(1);
 var defaultText = lorem[lang] || lorem.en;
 
 var App = function (_React$Component) {

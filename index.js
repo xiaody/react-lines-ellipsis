@@ -22,7 +22,7 @@ const styleProps = [
   'padding-right'
 ]
 
-function prevSibling(node, count) {
+function prevSibling (node, count) {
   while (node && count--) {
     node = node.previousElementSibling
   }

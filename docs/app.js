@@ -3,7 +3,7 @@ const ReactDOM = require('react-dom')
 const LinesEllipsis = require('../index')
 const lorem = require('./lorem')
 
-const lang = location.search.slice(1)
+const lang = window.location.search.slice(1)
 const defaultText = lorem[lang] || lorem.en
 
 class App extends React.Component {
@@ -19,7 +19,7 @@ class App extends React.Component {
     this.onTextEdit = this.onTextEdit.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     window.addEventListener('resize', () => {
       this.setState({
         renderId: this.state.renderId + 1
@@ -46,22 +46,22 @@ class App extends React.Component {
           ? (
             <div onClick={this.onTextClick}>
               <LinesEllipsis
-                className="ellipsis-text"
+                className='ellipsis-text'
                 text={text}
                 maxLine={maxLine}
-                ellipsis="... read more"
+                ellipsis='... read more'
                 key={renderId}
               />
             </div>
           )
-          : <div className="ellipsis-text">{text}</div>
+          : <div className='ellipsis-text'>{text}</div>
         }
         <textarea
-          className="text-editor"
+          className='text-editor'
           defaultValue={defaultText}
           onChange={this.onTextEdit}
-          placeholder="Enter any text"
-          spellCheck="false"
+          placeholder='Enter any text'
+          spellCheck='false'
         />
       </div>
     )
