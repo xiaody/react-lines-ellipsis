@@ -31,6 +31,6 @@ npm install --save react-lines-ellipsis
 
 ## Dev TODO
 
-- [] demo page
-- [] test cases
-- [] improve performance
+- [ ] demo page
+- [ ] test cases
+- [ ] improve performance
