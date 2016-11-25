@@ -16,6 +16,7 @@ body {
 
 ul {
   list-style: none;
+  padding: 0;
 }
 
 h1,
@@ -28,6 +29,7 @@ h1,
 
 .badges {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .badges li {
