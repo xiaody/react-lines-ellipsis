@@ -2,7 +2,10 @@ const React = require('react')
 
 const canvasStyle = {
   height: 0,
-  overflow: 'hidden'
+  overflow: 'hidden',
+  'padding-top': 0,
+  'padding-bottom': 0,
+  border: 'none'
 }
 const styleProps = [
   'box-sizing',
@@ -18,6 +21,13 @@ const styleProps = [
   'padding-left',
   'padding-right'
 ]
+
+function prevSibling(node, count) {
+  while (node && count--) {
+    node = node.previousElementSibling
+  }
+  return node
+}
 
 /**
  * props.text
@@ -76,11 +86,13 @@ class LinesEllipsis extends React.Component {
   }
 
   calcIndexes () {
+    const indexes = [0]
+    let elt = this.canvas.firstElementChild
+    if (!elt) return indexes
+
     let index = 0
     let line = 1
-    let elt = this.canvas.firstElementChild
     let offsetTop = elt.offsetTop
-    const indexes = [0]
     while ((elt = elt.nextElementSibling)) {
       if (elt.offsetTop > offsetTop) {
         line++
@@ -100,12 +112,14 @@ class LinesEllipsis extends React.Component {
     const chars = this.chars.slice(0, indexes[this.maxLine])
     this.canvas.innerHTML = chars.map((c, i) => {
       return `<span class='LinesEllipsis-char'>${c}</span>`
-    }).join('') + `<span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`
+    }).join('') + `<wbr><span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`
 
     const ndEllipsis = this.canvas.lastElementChild
-    while (ndEllipsis.offsetHeight > ndEllipsis.previousElementSibling.offsetHeight ||
-      ndEllipsis.offsetTop > ndEllipsis.previousElementSibling.offsetTop) {
-      this.canvas.removeChild(ndEllipsis.previousElementSibling)
+    let ndPrevChar = prevSibling(ndEllipsis, 2)
+    while (ndPrevChar && (ndEllipsis.offsetHeight > ndPrevChar.offsetHeight ||
+      ndEllipsis.offsetTop > ndPrevChar.offsetTop)) {
+      this.canvas.removeChild(ndPrevChar)
+      ndPrevChar = prevSibling(ndEllipsis, 2)
       chars.pop()
     }
     return chars.length
@@ -123,6 +137,7 @@ class LinesEllipsis extends React.Component {
           ? text.replace(/[\s\uFEFF\xA0]+$/, '')
           : text
         }
+        <wbr />
         {clamped &&
           <span className='LinesEllipsis-ellipsis'>{ellipsis}</span>
         }

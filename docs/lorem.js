@@ -1,0 +1,46 @@
+module.exports = {
+  en: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer commodo sagittis justo, at eleifend nisi pellentesque ut. Curabitur gravida tortor quis lobortis varius. Maecenas luctus quam vitae tristique malesuada. Nam sagittis, ex a mattis varius, turpis leo faucibus magna, et rutrum arcu tellus vitae felis. Nam bibendum nibh sollicitudin magna eleifend, et molestie erat venenatis. Pellentesque nec porttitor velit. Sed tristique odio vel justo pharetra, in vehicula tortor rhoncus. Praesent sit amet tristique lectus, non eleifend nisi. Maecenas hendrerit nisi mi, at pharetra purus vulputate ut. Morbi ante eros, feugiat et sollicitudin et, venenatis quis est. In at mauris eget felis vulputate interdum non at eros. Nulla sagittis lectus erat, ac sagittis arcu interdum at. Etiam venenatis porta leo, in feugiat sem congue id. In molestie, ex nec pharetra auctor, sem est malesuada enim, sit amet porttitor enim velit at massa. Vivamus tincidunt, turpis eget vestibulum rhoncus, lectus nisi vulputate nibh, sed vestibulum augue lorem vel sem. Etiam quis erat fringilla, tincidunt purus id, molestie nisl.',
+
+  zh: [
+    '《长恨歌》',
+    '汉皇重色思倾国，御宇多年求不得。',
+    '杨家有女初长成，养在深闺人未识。',
+    '天生丽质难自弃，一朝选在君王侧。',
+    '回眸一笑百媚生，六宫粉黛无颜色。',
+    '春寒赐浴华清池，温泉水滑洗凝脂。',
+    '侍儿扶起娇无力，始是新承恩泽时。',
+    '云鬓花颜金步摇，芙蓉帐暖度春宵。',
+    '春宵苦短日高起，从此君王不早朝。',
+    '承欢侍宴无闲暇，春从春游夜专夜。',
+    '后宫佳丽三千人，三千宠爱在一身。',
+    '金屋妆成娇侍夜，玉楼宴罢醉和春。',
+    '姊妹弟兄皆列土，可怜光彩生门户。',
+    '遂令天下父母心，不重生男重生女。',
+    '骊宫高处入青云，仙乐风飘处处闻。',
+    '缓歌慢舞凝丝竹，尽日君王看不足。',
+    '渔阳鼙鼓动地来，惊破霓裳羽衣曲。'
+  ].join('\n    '),
+
+  jp: [
+    '鳥の詩',
+		'消える飛行機雲　僕たちは見送った',
+		'眩しくて逃げた　いつだって弱くて',
+		'あの日から変わらず　いつまでも変わらずに',
+		'いられなかったこと　悔しくて指を離す',
+		'あの鳥は　まだ　うまく飛べないけど',
+		'いつかは　風を切って知る',
+		'届かない場所が　まだ遠くにある',
+		'願いだけ秘めて　見つめてる',
+		'子供たちは　夏の線路 歩く',
+		'吹く風に素足をさらして',
+		'遠くには幼かった日びを',
+		'両手には　飛び立つ希望を',
+		'消える飛行機雲　追いかけて　追いかけて',
+		'この丘を越えた　あの日から変わらず',
+		'いつまでも　真っ直ぐに',
+		'僕たちはあるように　わたつみのような',
+		'強さを守れるよ　きっと'
+  ].join('\n    '),
+
+  emoji: '😛 🤑 🤓 😎 🤗 😏 😶 😐 😑 😒 🙄 🤔 😳 😞 😟 😠 😡 😔 '.repeat(20)
+}

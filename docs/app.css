@@ -1,0 +1,48 @@
+* {
+  box-sizing: inherit;
+}
+
+:root {
+  box-sizing: border-box;
+  color: #404040;
+}
+
+.nav ul {
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav li {
+  list-style: none;
+}
+
+.container {
+  width: 960px;
+  max-width: calc(100vw - 40px);
+  margin: auto;
+}
+
+.ellipsis-text {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f2f7;
+  white-space: pre-wrap;
+}
+
+.LinesEllipsis--clamped {
+  cursor: pointer;
+}
+
+.LinesEllipsis--clamped:hover .LinesEllipsis-ellipsis {
+  color: #259;
+}
+
+.text-editor {
+  display: block;
+  width: 100%;
+  min-height: 300px;
+  margin-top: 24px;
+  border: 1px solid #e7e7e7;
+  border-radius: 3px;
+  font-size: 14px;
+}
