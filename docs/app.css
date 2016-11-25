@@ -36,6 +36,10 @@ h1,
   margin-right: 1em;
 }
 
+.badges a {
+  display: inline-flex;
+}
+
 .nav ul {
   display: flex;
   justify-content: space-around;
@@ -53,6 +57,7 @@ h1,
 
 .container {
   margin-top: 2em;
+  margin-bottom: 50px;
 }
 
 .ellipsis-text {
@@ -74,6 +79,18 @@ h1,
   color: #3e7ac2;
 }
 
+.lines-controller {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.lines-controller input {
+  flex-grow: 1;
+  margin-left: 1em;
+}
+
 .text-editor {
   display: block;
   width: 100%;
@@ -83,4 +100,15 @@ h1,
   border: 1px solid #e7e7e7;
   border-radius: 3px;
   font-size: 14px;
+  background: #f8f8f8;
+}
+
+.text-editor:focus {
+  background: #fff;
+}
+
+@media (max-width: 480px) {
+  .hide-sm {
+    display: none;
+  }
 }
