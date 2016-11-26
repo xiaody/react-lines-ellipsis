@@ -21,8 +21,8 @@ class App extends Component {
     }
     this.onTextClick = this.onTextClick.bind(this)
     this.onTextKey = this.onTextKey.bind(this)
-    this.onTextEdit = this.onTextEdit.bind(this)
-    this.onChangeLines = this.onChangeLines.bind(this)
+    this.onTextEdit = debounce(this.onTextEdit.bind(this), 100)
+    this.onChangeLines = debounce(this.onChangeLines.bind(this))
     this.onResize = debounce(this.onResize.bind(this), 150)
   }
 
@@ -101,4 +101,6 @@ class App extends Component {
   }
 }
 
-render(<App />, document.getElementById('react-root'))
+window.requestAnimationFrame(function bootstrap () {
+  render(<App />, document.getElementById('react-root'))
+})

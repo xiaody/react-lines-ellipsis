@@ -33,7 +33,9 @@ h1,
 }
 
 .badges li {
-  margin-right: 1em;
+  display: inline-flex;
+  margin-right: 0.8em;
+  margin-bottom: .2em;
 }
 
 .badges a {

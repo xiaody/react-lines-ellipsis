@@ -9,7 +9,7 @@
   "scripts": {
     "test": "standard",
     "build": "babel index.js > bundle.js",
-    "docs": "browserify -e docs/app.js > docs/app.bundle.js",
+    "docs": "browserify -e docs/app.js | uglifyjs -m > docs/app.bundle.js",
     "docs:watch": "watchify -e docs/app.js -o docs/app.bundle.js",
     "prepublish": "npm run build"
   },
@@ -37,6 +37,7 @@
     "preact": "6.4.0",
     "preact-compat": "3.9.2",
     "standard": "8.6.0",
+    "uglifyjs": "2.4.10",
     "watchify": "^3.7.0"
   },
   "standard": {

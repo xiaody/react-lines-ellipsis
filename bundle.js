@@ -11,6 +11,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = require('react');
 
 var canvasStyle = {
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
   height: 0,
   overflow: 'hidden',
   'padding-top': 0,
