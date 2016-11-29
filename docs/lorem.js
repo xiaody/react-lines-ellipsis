@@ -46,7 +46,7 @@ module.exports = {
 
   html: `<h5>&#65799;<em>Nǐ hǎo 你好</em> <b>how are you</b> 😄   márħaban <b>העלא</b></h5>
     <p>&#65800;CSS is <i>a&omega;esome</i> مفتاح معايير الويب!&rlm;</p>
-    &#65801;yeah!  <a target=_blank href='//github.com/xiaody/react-lines-ellipsis'>Fork me at Github<a/>
+    &#65801;yeah!  <a target=_blank href='//github.com/xiaody/react-lines-ellipsis'>Fork me at Github</a>
     <br>
     <ol>
       <li>&#65802;task 1

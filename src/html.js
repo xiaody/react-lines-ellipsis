@@ -49,6 +49,10 @@ function findBlockAncestor (node) {
   }
 }
 
+function hasSize (ndChar) {
+  return !!(ndChar.offsetHeight && ndChar.offsetWidth)
+}
+
 /**
  * props.unsafeHTML {String} the rich content you want to clamp
  * props.maxLine {Number|String} max lines allowed
@@ -114,7 +118,7 @@ class HTMLEllipsis extends React.Component {
     let line = 1
     let offsetTop = nlChars[0].offsetTop
     for (let i = 1; i < len; i++) {
-      if (nlChars[i].offsetHeight && nlChars[i].offsetTop - offsetTop > 1) {
+      if (hasSize(nlChars[i]) && nlChars[i].offsetTop - offsetTop > 1) {
         line++
         indexes.push(i)
         offsetTop = nlChars[i].offsetTop
@@ -134,12 +138,16 @@ class HTMLEllipsis extends React.Component {
     const ndEllipsis = this.makeEllipsisSpan()
     findBlockAncestor(ndPrevChar).appendChild(ndEllipsis)
 
-    while (ndPrevChar && (ndEllipsis.offsetHeight > ndPrevChar.offsetHeight ||
-      ndEllipsis.offsetTop > ndPrevChar.offsetTop)) {
+    while (ndPrevChar && (
+      !hasSize(ndPrevChar) ||
+      ndEllipsis.offsetHeight > ndPrevChar.offsetHeight ||
+      ndEllipsis.offsetTop > ndPrevChar.offsetTop)
+    ) {
       ndPrevChar = this.nlChars.pop()
       removeFollowingElementLeaves(ndPrevChar, this.canvas)
       findBlockAncestor(ndPrevChar).appendChild(ndEllipsis)
     }
+    unwrapTextNode(ndPrevChar)
     this.nlChars.forEach(unwrapTextNode)
 
     return true
