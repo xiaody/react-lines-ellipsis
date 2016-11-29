@@ -114,7 +114,7 @@ class HTMLEllipsis extends React.Component {
     let line = 1
     let offsetTop = nlChars[0].offsetTop
     for (let i = 1; i < len; i++) {
-      if (nlChars[i].offsetHeight && nlChars[i].offsetTop > offsetTop) {
+      if (nlChars[i].offsetHeight && nlChars[i].offsetTop - offsetTop > 1) {
         line++
         indexes.push(i)
         offsetTop = nlChars[i].offsetTop
