@@ -49,8 +49,8 @@ function findBlockAncestor (node) {
   }
 }
 
-function hasSize (ndChar) {
-  return !!(ndChar.offsetHeight && ndChar.offsetWidth)
+function affectLayout (ndChar) {
+  return !!(ndChar.offsetHeight && (ndChar.offsetWidth || /\S/.test(ndChar.textContent)))
 }
 
 /**
@@ -118,7 +118,7 @@ class HTMLEllipsis extends React.Component {
     let line = 1
     let offsetTop = nlChars[0].offsetTop
     for (let i = 1; i < len; i++) {
-      if (hasSize(nlChars[i]) && nlChars[i].offsetTop - offsetTop > 1) {
+      if (affectLayout(nlChars[i]) && nlChars[i].offsetTop - offsetTop > 1) {
         line++
         indexes.push(i)
         offsetTop = nlChars[i].offsetTop
@@ -139,7 +139,7 @@ class HTMLEllipsis extends React.Component {
     findBlockAncestor(ndPrevChar).appendChild(ndEllipsis)
 
     while (ndPrevChar && (
-      !hasSize(ndPrevChar) ||
+      !affectLayout(ndPrevChar) ||
       ndEllipsis.offsetHeight > ndPrevChar.offsetHeight ||
       ndEllipsis.offsetTop > ndPrevChar.offsetTop)
     ) {
