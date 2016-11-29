@@ -16,7 +16,9 @@ npm install --save react-lines-ellipsis
 
 ## Usage
 
-```xml
+```jsx
+import LinesEllipsis from 'react-lines-ellipsis'
+
 <LinesEllipsis
   text="long long text"
   maxLine="3"
@@ -27,11 +29,23 @@ npm install --save react-lines-ellipsis
 
 ## Limitations
 
-- only accept plain text
-- can be fooled by `::first-letter` styles
-- require some es2015 methods: `Array.from`, `Object.keys`, etc.
+- only accept plain text by default. use `lib/html.js` for experimental rich html support
+- can be fooled by some styles: `::first-letter`, italic fonts, etc.
+- require modern browsers env
 
-## Dev TODO
+## Experimental html truncation
+
+```jsx
+import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
+
+<HTMLEllipsis
+  unsafeHTML="simple html content"
+  maxLine="5"
+  ellipsis="..."
+/>
+```
+
+## Dev TODOs
 
 - [x] demo page
 - [ ] test cases

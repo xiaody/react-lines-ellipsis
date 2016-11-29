@@ -42,5 +42,22 @@ module.exports = {
     '強さを守れるよ　きっと'
   ].join('\n    '),
 
-  emoji: '😛 🤑 🤓 😎 🤗 😏 😶 😐 😑 😒 🙄 🤔 😳 😞 😟 😠 😡 😔 '.repeat(20)
+  emoji: '😛 🤑 🤓 😎 🤗 😏 😶 😐 😑 😒 🙄 🤔 😳 😞 😟 😠 😡 😔 '.repeat(20),
+
+  html: `<h5>&#65799;<em>Nǐ hǎo 你好</em> <b>how are you</b> 😄   márħaban <b>העלא</b></h5>
+    <p>&#65800;CSS is <i>a&omega;esome</i> مفتاح معايير الويب!&rlm;</p>
+    &#65801;yeah!  <a target=_blank href='//github.com/xiaody/react-lines-ellipsis'>Fork me at Github<a/>
+    <br>
+    <ol>
+      <li>&#65802;task 1
+      <li>
+        <ul>
+          <li>&#65803;<span style="text-decoration: line-through">task 2.1</span>
+          <li>&#65804;task 2.2
+        </ul>
+      </li>
+      <li>&#65805;task 3
+    </ol>
+    <section style="color: grey">&#65806;до свидания！( ^_^ )/~</section>
+  `
 }

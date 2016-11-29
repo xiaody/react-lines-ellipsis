@@ -1,11 +1,17 @@
 const preact = require('preact')
 const debounce = require('lodash/debounce')
-const LinesEllipsis = require('../index')
+const LinesEllipsis = require('../src/index')
+const HTMLEllipsis = require('../src/html')
 const lorem = require('./lorem')
 
 const {h, render, Component} = preact
 const lang = window.location.search.slice(1)
 const defaultText = lorem[lang] || lorem.en
+const unsafe = lang === 'html'
+
+if (unsafe) {
+  document.querySelector('.unsafe-warning').removeAttribute('hidden')
+}
 
 let winWidth = window.innerWidth
 
@@ -34,7 +40,8 @@ class App extends Component {
     window.removeEventListener('resize', this.onResize)
   }
 
-  onTextClick () {
+  onTextClick (e) {
+    e.preventDefault()
     this.setState({useEllipsis: false})
   }
 
@@ -67,7 +74,40 @@ class App extends Component {
     })
   }
 
-  render () {
+  renderUnsafe () {
+    const {text, maxLine, useEllipsis, renderId} = this.state
+    return (
+      <div>
+        <label className='lines-controller hide-sm'>
+          Show {maxLine} lines:
+          <input type='range' value={maxLine} min='1' max='10' onInput={this.onChangeLines} />
+        </label>
+        {useEllipsis
+          ? (
+            <div onClick={this.onTextClick} onKeyDown={this.onTextKey} tabIndex='0'>
+              <HTMLEllipsis
+                className='ellipsis-html'
+                unsafeHTML={text}
+                maxLine={maxLine}
+                ellipsis='... read more'
+                key={renderId}
+              />
+            </div>
+          )
+          : <div className='ellipsis-html' dangerouslySetInnerHTML={{__html: text}} />
+        }
+        <textarea
+          className='text-editor'
+          value={text}
+          onInput={this.onTextEdit}
+          placeHolder='Enter any HTML'
+          spellCheck='false'
+        />
+      </div>
+    )
+  }
+
+  renderSafe () {
     const {text, maxLine, useEllipsis, renderId} = this.state
     return (
       <div>
@@ -98,6 +138,10 @@ class App extends Component {
         />
       </div>
     )
+  }
+
+  render () {
+    return unsafe ? this.renderUnsafe() : this.renderSafe()
   }
 }
 

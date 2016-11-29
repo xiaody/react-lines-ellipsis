@@ -62,10 +62,14 @@ h1,
   margin-bottom: 50px;
 }
 
-.ellipsis-text {
+.ellipsis-text,
+.ellipsis-html {
   margin: 12px 0;
   padding-bottom: 12px;
   border-bottom: 1px solid #f0f2f7;
+}
+
+.ellipsis-text {
   white-space: pre-wrap;
 }
 
@@ -107,6 +111,10 @@ h1,
 
 .text-editor:focus {
   background: #fff;
+}
+
+.unsafe-warning {
+  font-weight: bold;
 }
 
 @media (max-width: 480px) {

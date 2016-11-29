@@ -5,6 +5,7 @@
     <title>react lines ellipsis</title>
     <link rel="stylesheet" href="app.css">
     <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; connect-src 'none'">
   </head>
 
   <body>
@@ -14,6 +15,7 @@
         <li><a href="?zh">zh</a></li>
         <li><a href="?jp">jp</a></li>
         <li><a href="?emoji">emoji</a></li>
+        <li><a href="?html">html</a></li>
         <li><a href="//github.com/xiaody/react-lines-ellipsis" class="github">(Github)</a></li>
       </ul>
     </nav>
@@ -38,6 +40,7 @@
       </li>
     </ul>
 
+    <p class="unsafe-warning" hidden><em>NOTICE: HTML support is currently experimental</em></p>
     <main id="react-root" class="container"></main>
 
     <script src="app.bundle.js" async></script>

@@ -1,29 +1,5 @@
 const React = require('react')
-
-const canvasStyle = {
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  height: 0,
-  overflow: 'hidden',
-  'padding-top': 0,
-  'padding-bottom': 0,
-  border: 'none'
-}
-const styleProps = [
-  'box-sizing',
-  'width',
-  'font-size',
-  'font-weight',
-  'font-family',
-  'font-style',
-  'letter-spacing',
-  'text-indent',
-  'white-space',
-  'word-break',
-  'padding-left',
-  'padding-right'
-]
+const {canvasStyle, mirrorProps} = require('./common')
 
 function prevSibling (node, count) {
   while (node && count--) {
@@ -69,7 +45,7 @@ class LinesEllipsis extends React.Component {
     const canvas = this.canvas = document.createElement('div')
     canvas.className = `LinesEllipsis-canvas ${this.props.className}`
     const targetStyle = window.getComputedStyle(this.target)
-    styleProps.forEach((key) => {
+    mirrorProps.forEach((key) => {
       canvas.style[key] = targetStyle[key]
     })
     Object.keys(canvasStyle).forEach((key) => {

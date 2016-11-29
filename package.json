@@ -2,13 +2,14 @@
   "name": "react-lines-ellipsis",
   "version": "0.3.1",
   "description": "Simple multiline ellipsis component for React.JS",
-  "main": "bundle.js",
+  "main": "lib/index.js",
   "files": [
-    "bundle.js"
+    "lib"
   ],
   "scripts": {
     "test": "standard",
-    "build": "babel index.js > bundle.js",
+    "prebuild": "mkdir -p lib && cp src/common.js lib",
+    "build": "babel src/index.js > lib/index.js && babel src/html.js > lib/html.js",
     "docs": "browserify -e docs/app.js | uglifyjs -m > docs/app.bundle.js",
     "docs:watch": "watchify -e docs/app.js -o docs/app.bundle.js",
     "prepublish": "npm run build"
@@ -42,6 +43,7 @@
   },
   "standard": {
     "ignore": [
+      "lib",
       "docs/*.bundle.js"
     ]
   },
