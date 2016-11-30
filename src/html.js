@@ -1,28 +1,40 @@
 const React = require('react')
 const {canvasStyle, mirrorProps} = require('./common')
 
-function dummySpan (text) {
-  const span = document.createElement('span')
-  span.className = 'LinesEllipsis-char'
-  span.textContent = text
-  return span
-}
-
-function hookNode (node) {
+function hookNode (node, basedOn) {
   /* eslint-env browser */
+  if (basedOn !== 'letters' && basedOn !== 'words') {
+    throw new Error(`Unsupported options basedOn: ${basedOn}`)
+  }
   if (node.nodeType === Node.TEXT_NODE) {
     const frag = document.createDocumentFragment()
-    Array.from(node.textContent).forEach((cha) => {
-      frag.appendChild(dummySpan(cha))
+    let units
+    switch (basedOn) {
+      case 'words':
+        units = node.textContent.split(/\b|(?=\W)/)
+        break
+      case 'letters':
+        units = Array.from(node.textContent)
+        break
+    }
+    units.forEach((unit) => {
+      frag.appendChild(dummySpan(unit))
     })
     node.parentNode.replaceChild(frag, node)
   } else if (node.nodeType === Node.ELEMENT_NODE) {
     const nodes = [].slice.call(node.childNodes)
     const len = nodes.length
     for (let i = 0; i < len; i++) {
-      hookNode(nodes[i])
+      hookNode(nodes[i], basedOn)
     }
   }
+}
+
+function dummySpan (text) {
+  const span = document.createElement('span')
+  span.className = 'LinesEllipsis-unit'
+  span.textContent = text
+  return span
 }
 
 function unwrapTextNode (node) {
@@ -49,14 +61,15 @@ function findBlockAncestor (node) {
   }
 }
 
-function affectLayout (ndChar) {
-  return !!(ndChar.offsetHeight && (ndChar.offsetWidth || /\S/.test(ndChar.textContent)))
+function affectLayout (ndUnit) {
+  return !!(ndUnit.offsetHeight && (ndUnit.offsetWidth || /\S/.test(ndUnit.textContent)))
 }
 
 /**
  * props.unsafeHTML {String} the rich content you want to clamp
  * props.maxLine {Number|String} max lines allowed
  * props.ellipsis {String} the ellipsis indicator
+ * props.basedOn {String} letters|words
  * props.className {String}
  */
 class HTMLEllipsis extends React.Component {
@@ -68,7 +81,7 @@ class HTMLEllipsis extends React.Component {
     }
     this.canvas = null
     this.maxLine = 0
-    this.nlChars = []
+    this.nlUnits = []
   }
 
   componentDidMount () {
@@ -99,9 +112,11 @@ class HTMLEllipsis extends React.Component {
   }
 
   reflow (props) {
+    /* eslint-disable no-control-regex */
     this.maxLine = +props.maxLine || 1
     this.canvas.innerHTML = props.unsafeHTML
-    hookNode(this.canvas)
+    const basedOn = props.basedOn || /^[\x00-\x7F]+$/.test(props.unsafeHTML) ? 'words' : 'letters'
+    hookNode(this.canvas, basedOn)
     const clamped = this.putEllipsis(this.calcIndexes())
     this.setState({clamped})
     if (clamped) {
@@ -111,17 +126,17 @@ class HTMLEllipsis extends React.Component {
 
   calcIndexes () {
     const indexes = [0]
-    const nlChars = this.nlChars = Array.from(this.canvas.querySelectorAll('.LinesEllipsis-char'))
-    const len = nlChars.length
-    if (!nlChars.length) return indexes
+    const nlUnits = this.nlUnits = Array.from(this.canvas.querySelectorAll('.LinesEllipsis-unit'))
+    const len = nlUnits.length
+    if (!nlUnits.length) return indexes
 
     let line = 1
-    let offsetTop = nlChars[0].offsetTop
+    let offsetTop = nlUnits[0].offsetTop
     for (let i = 1; i < len; i++) {
-      if (affectLayout(nlChars[i]) && nlChars[i].offsetTop - offsetTop > 1) {
+      if (affectLayout(nlUnits[i]) && nlUnits[i].offsetTop - offsetTop > 1) {
         line++
         indexes.push(i)
-        offsetTop = nlChars[i].offsetTop
+        offsetTop = nlUnits[i].offsetTop
         if (line > this.maxLine) {
           break
         }
@@ -132,23 +147,23 @@ class HTMLEllipsis extends React.Component {
 
   putEllipsis (indexes) {
     if (indexes.length <= this.maxLine) return false
-    this.nlChars = this.nlChars.slice(0, indexes[this.maxLine])
-    let ndPrevChar = this.nlChars.pop()
-    removeFollowingElementLeaves(ndPrevChar, this.canvas)
+    this.nlUnits = this.nlUnits.slice(0, indexes[this.maxLine])
+    let ndPrevUnit = this.nlUnits.pop()
+    removeFollowingElementLeaves(ndPrevUnit, this.canvas)
     const ndEllipsis = this.makeEllipsisSpan()
-    findBlockAncestor(ndPrevChar).appendChild(ndEllipsis)
+    findBlockAncestor(ndPrevUnit).appendChild(ndEllipsis)
 
-    while (ndPrevChar && (
-      !affectLayout(ndPrevChar) ||
-      ndEllipsis.offsetHeight > ndPrevChar.offsetHeight ||
-      ndEllipsis.offsetTop > ndPrevChar.offsetTop)
+    while (ndPrevUnit && (
+      !affectLayout(ndPrevUnit) ||
+      ndEllipsis.offsetHeight > ndPrevUnit.offsetHeight ||
+      ndEllipsis.offsetTop > ndPrevUnit.offsetTop)
     ) {
-      ndPrevChar = this.nlChars.pop()
-      removeFollowingElementLeaves(ndPrevChar, this.canvas)
-      findBlockAncestor(ndPrevChar).appendChild(ndEllipsis)
+      ndPrevUnit = this.nlUnits.pop()
+      removeFollowingElementLeaves(ndPrevUnit, this.canvas)
+      findBlockAncestor(ndPrevUnit).appendChild(ndEllipsis)
     }
-    unwrapTextNode(ndPrevChar)
-    this.nlChars.forEach(unwrapTextNode)
+    unwrapTextNode(ndPrevUnit)
+    this.nlUnits.forEach(unwrapTextNode)
 
     return true
   }

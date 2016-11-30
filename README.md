@@ -4,7 +4,7 @@
 
 # react-lines-ellipsis
 
-Poor man's multiline ellipsis component for React.JS
+Poor man's multiline ellipsis component for React.JS https://xiaody.github.io/react-lines-ellipsis/
 
 ### Installation
 
@@ -24,13 +24,36 @@ import LinesEllipsis from 'react-lines-ellipsis'
   maxLine="3"
   ellipsis="..."
   trimRight
+  basedOn="letters"
 />
 ```
 
+## Options
+
+### props.text {String}
+
+The text you want to clamp.
+
+### props.maxLine {Number|String}
+
+Max count of lines allowed. Default `1`.
+
+### props.ellipsis {String}
+
+Text content of the ellipsis. Default `…`.
+
+### props.trimRight {Boolean}
+
+Trim right the clamped text to avoid putting the ellipsis on a empty line. Default `true`.
+
+### props.basedOn {String}
+
+Split by `letters` or `words`. By default it use a guess based on your text.
+
 ## Limitations
 
-- only accept plain text by default. use `lib/html.js` for experimental rich html support
-- can be fooled by some styles: `::first-letter`, italic fonts, etc.
+- only accept plain text by default. Use `lib/html.js` for experimental rich html support
+- can be fooled by some special styles: `::first-letter`, ligatures, etc.
 - require modern browsers env
 
 ## Experimental html truncation
@@ -42,6 +65,7 @@ import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
   unsafeHTML="simple html content"
   maxLine="5"
   ellipsis="..."
+  basedOn="letters"
 />
 ```
 

@@ -21,7 +21,7 @@ class App extends Component {
     super(props)
     this.state = {
       text: defaultText,
-      maxLine: 5,
+      maxLine: 3,
       useEllipsis: true,
       renderId: 1
     }

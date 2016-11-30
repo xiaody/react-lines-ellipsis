@@ -13,6 +13,7 @@ function prevSibling (node, count) {
  * props.maxLine {Number|String} max lines allowed
  * props.ellipsis {String} the ellipsis indicator
  * props.trimRight {Boolean} should we trimRight the clamped text?
+ * props.basedOn {String} letters|words
  * props.className {String}
  */
 class LinesEllipsis extends React.Component {
@@ -22,7 +23,7 @@ class LinesEllipsis extends React.Component {
       text: props.text,
       clamped: false
     }
-    this.chars = []
+    this.units = []
     this.maxLine = 0
     this.canvas = null
   }
@@ -55,16 +56,27 @@ class LinesEllipsis extends React.Component {
   }
 
   reflow (props) {
-    this.chars = Array.from(props.text)
+    /* eslint-disable no-control-regex */
+    const basedOn = props.basedOn || /^[\x00-\x7F]+$/.test(props.text) ? 'words' : 'letters'
+    switch (basedOn) {
+      case 'words':
+        this.units = props.text.split(/\b|(?=\W)/)
+        break
+      case 'letters':
+        this.units = Array.from(props.text)
+        break
+      default:
+        throw new Error(`Unsupported options basedOn: ${basedOn}`)
+    }
     this.maxLine = +props.maxLine || 1
-    this.canvas.innerHTML = this.chars.map((c) => {
-      return `<span class='LinesEllipsis-char'>${c}</span>`
+    this.canvas.innerHTML = this.units.map((c) => {
+      return `<span class='LinesEllipsis-unit'>${c}</span>`
     }).join('')
     const ellipsisIndex = this.putEllipsis(this.calcIndexes())
     const clamped = ellipsisIndex > -1
     this.setState({
       clamped,
-      text: clamped ? this.chars.slice(0, ellipsisIndex).join('') : props.text
+      text: clamped ? this.units.slice(0, ellipsisIndex).join('') : props.text
     })
   }
 
@@ -92,20 +104,20 @@ class LinesEllipsis extends React.Component {
 
   putEllipsis (indexes) {
     if (indexes.length <= this.maxLine) return -1
-    const chars = this.chars.slice(0, indexes[this.maxLine])
-    this.canvas.innerHTML = chars.map((c, i) => {
-      return `<span class='LinesEllipsis-char'>${c}</span>`
+    const units = this.units.slice(0, indexes[this.maxLine])
+    this.canvas.innerHTML = units.map((c, i) => {
+      return `<span class='LinesEllipsis-unit'>${c}</span>`
     }).join('') + `<wbr><span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`
 
     const ndEllipsis = this.canvas.lastElementChild
-    let ndPrevChar = prevSibling(ndEllipsis, 2)
-    while (ndPrevChar && (ndEllipsis.offsetHeight > ndPrevChar.offsetHeight ||
-      ndEllipsis.offsetTop > ndPrevChar.offsetTop)) {
-      this.canvas.removeChild(ndPrevChar)
-      ndPrevChar = prevSibling(ndEllipsis, 2)
-      chars.pop()
+    let ndPrevUnit = prevSibling(ndEllipsis, 2)
+    while (ndPrevUnit && (ndEllipsis.offsetHeight > ndPrevUnit.offsetHeight ||
+      ndEllipsis.offsetTop > ndPrevUnit.offsetTop)) {
+      this.canvas.removeChild(ndPrevUnit)
+      ndPrevUnit = prevSibling(ndEllipsis, 2)
+      units.pop()
     }
-    return chars.length
+    return units.length
   }
 
   render () {

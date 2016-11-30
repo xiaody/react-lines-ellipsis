@@ -16,9 +16,12 @@
   },
   "keywords": [
     "react",
+    "react-component",
     "multiline",
     "ellipsis",
-    "clamp"
+    "dotdotdot",
+    "clamp",
+    "read-more"
   ],
   "author": "xiaody",
   "license": "MIT",
