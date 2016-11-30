@@ -193,7 +193,7 @@ class HTMLEllipsis extends React.Component {
 }
 
 HTMLEllipsis.defaultProps = {
-  html: '',
+  unsafeHTML: '',
   maxLine: 1,
   ellipsis: '…', // &hellip;
   className: ''
