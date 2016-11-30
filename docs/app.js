@@ -47,7 +47,7 @@ class App extends Component {
 
   onTextKey (e) {
     if (e.keyCode === 13) {
-      this.onTextClick()
+      this.onTextClick(e)
     }
   }
 
