@@ -44,11 +44,11 @@ Text content of the ellipsis. Default `…`.
 
 ### props.trimRight {Boolean}
 
-Trim right the clamped text to avoid putting the ellipsis on a empty line. Default `true`.
+Trim right the clamped text to avoid putting the ellipsis on an empty line. Default `true`.
 
 ### props.basedOn {String}
 
-Split by `letters` or `words`. By default it use a guess based on your text.
+Split by `letters` or `words`. By default it uses a guess based on your text.
 
 ## Limitations
 
