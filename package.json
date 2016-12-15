@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "test": "standard",
-    "prebuild": "mkdir -p lib && cp src/common.js lib",
-    "build": "babel src/index.js > lib/index.js && babel src/html.js > lib/html.js",
+    "prebuild": "mkdir -p lib",
+    "build": "babel src/common.js > lib/common.js && babel src/index.js > lib/index.js && babel src/html.js > lib/html.js",
     "docs": "browserify -e docs/app.js | uglifyjs -m > docs/app.bundle.js",
     "docs:watch": "watchify -e docs/app.js -o docs/app.bundle.js",
     "prepublish": "npm run build"
