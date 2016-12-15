@@ -1,3 +1,7 @@
+require('core-js/fn/string/repeat') // IE 11
+require('core-js/fn/array/from') // IE 11
+require('raf/polyfill') // IE 9
+
 const preact = require('preact')
 const debounce = require('lodash/debounce')
 const LinesEllipsis = require('../src/index')

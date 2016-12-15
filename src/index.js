@@ -104,15 +104,22 @@ class LinesEllipsis extends React.Component {
 
   putEllipsis (indexes) {
     if (indexes.length <= this.maxLine) return -1
-    const units = this.units.slice(0, indexes[this.maxLine])
+    const lastIndex = indexes[this.maxLine]
+    const units = this.units.slice(0, lastIndex)
+    const maxOffsetTop = this.canvas.children[lastIndex].offsetTop
     this.canvas.innerHTML = units.map((c, i) => {
       return `<span class='LinesEllipsis-unit'>${c}</span>`
     }).join('') + `<wbr><span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`
 
     const ndEllipsis = this.canvas.lastElementChild
     let ndPrevUnit = prevSibling(ndEllipsis, 2)
-    while (ndPrevUnit && (ndEllipsis.offsetHeight > ndPrevUnit.offsetHeight ||
-      ndEllipsis.offsetTop > ndPrevUnit.offsetTop)) {
+    while (ndPrevUnit &&
+      (
+        ndEllipsis.offsetTop > maxOffsetTop || // IE & Edge: doesn't support <wbr>
+        ndEllipsis.offsetHeight > ndPrevUnit.offsetHeight ||
+        ndEllipsis.offsetTop > ndPrevUnit.offsetTop
+      )
+    ) {
       this.canvas.removeChild(ndPrevUnit)
       ndPrevUnit = prevSibling(ndEllipsis, 2)
       units.pop()
