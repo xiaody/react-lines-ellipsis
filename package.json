@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "test": "standard",
-    "prebuild": "mkdir -p lib",
-    "build": "babel src/common.js > lib/common.js && babel src/index.js > lib/index.js && babel src/html.js > lib/html.js",
+    "prebuild": "mkdir -p lib && cp src/common.js lib",
+    "build": "babel src/index.js > lib/index.js && babel src/html.js > lib/html.js",
     "docs": "browserify -e docs/app.js | uglifyjs -m > docs/app.bundle.js",
     "docs:watch": "watchify -e docs/app.js -o docs/app.bundle.js",
     "prepublish": "npm run build"
@@ -33,7 +33,6 @@
   "devDependencies": {
     "aliasify": "2.1.0",
     "babel-cli": "^6.18.0",
-    "babel-plugin-transform-es2015-modules-umd": "6.18.0",
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-preset-es2015": "^6.18.0",
     "babelify": "^7.3.0",
