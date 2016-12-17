@@ -6,7 +6,7 @@
 
 Poor man's multiline ellipsis component for React.JS https://xiaody.github.io/react-lines-ellipsis/
 
-### Installation
+## Installation
 
 To install the stable version:
 
@@ -20,11 +20,11 @@ npm install --save react-lines-ellipsis
 import LinesEllipsis from 'react-lines-ellipsis'
 
 <LinesEllipsis
-  text="long long text"
-  maxLine="3"
-  ellipsis="..."
+  text='long long text'
+  maxLine='3'
+  ellipsis='...'
   trimRight
-  basedOn="letters"
+  basedOn='letters'
 />
 ```
 
