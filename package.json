@@ -42,6 +42,8 @@
     "preact": "7.1.0",
     "preact-compat": "3.9.3",
     "raf": "3.3.0",
+    "react": "*",
+    "react-dom": "*",
     "standard": "8.6.0",
     "uglifyjs": "2.4.10",
     "watchify": "^3.7.0"
