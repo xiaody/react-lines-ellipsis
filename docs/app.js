@@ -4,8 +4,9 @@ require('raf/polyfill') // IE 9
 
 const preact = require('preact')
 const debounce = require('lodash/debounce')
-const LinesEllipsis = require('../src/index')
-const HTMLEllipsis = require('../src/html')
+const responsiveHOC = require('../src/responsiveHOC')
+const LinesEllipsis = responsiveHOC()(require('../src/index'))
+const HTMLEllipsis = responsiveHOC()(require('../src/html'))
 const lorem = require('./lorem')
 
 const {h, render, Component} = preact
@@ -17,8 +18,6 @@ if (unsafe) {
   document.querySelector('.unsafe-warning').removeAttribute('hidden')
 }
 
-let winWidth = window.innerWidth
-
 /** @jsx h */
 class App extends Component {
   constructor (props) {
@@ -26,22 +25,12 @@ class App extends Component {
     this.state = {
       text: defaultText,
       maxLine: 3,
-      useEllipsis: true,
-      renderId: 1
+      useEllipsis: true
     }
     this.onTextClick = this.onTextClick.bind(this)
     this.onTextKey = this.onTextKey.bind(this)
     this.onTextEdit = debounce(this.onTextEdit.bind(this), 100)
     this.onChangeLines = debounce(this.onChangeLines.bind(this))
-    this.onResize = debounce(this.onResize.bind(this), 150)
-  }
-
-  componentDidMount () {
-    window.addEventListener('resize', this.onResize)
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('resize', this.onResize)
   }
 
   onTextClick (e) {
@@ -69,17 +58,8 @@ class App extends Component {
     })
   }
 
-  onResize () {
-    // optimize for iOS Safari
-    if (window.innerWidth === winWidth) return
-    winWidth = window.innerWidth
-    this.setState({
-      renderId: this.state.renderId + 1
-    })
-  }
-
   renderUnsafe () {
-    const {text, maxLine, useEllipsis, renderId} = this.state
+    const {text, maxLine, useEllipsis} = this.state
     return (
       <div>
         <label className='lines-controller hide-sm'>
@@ -94,7 +74,6 @@ class App extends Component {
                 unsafeHTML={text}
                 maxLine={maxLine}
                 ellipsis='... read more'
-                key={renderId}
               />
             </div>
           )
@@ -112,7 +91,7 @@ class App extends Component {
   }
 
   renderSafe () {
-    const {text, maxLine, useEllipsis, renderId} = this.state
+    const {text, maxLine, useEllipsis} = this.state
     return (
       <div>
         <label className='lines-controller hide-sm'>
@@ -127,7 +106,6 @@ class App extends Component {
                 text={text}
                 maxLine={maxLine}
                 ellipsis='... read more'
-                key={renderId}
               />
             </div>
           )

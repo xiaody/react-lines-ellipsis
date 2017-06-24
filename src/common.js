@@ -9,6 +9,7 @@ module.exports = {
     'padding-bottom': 0,
     border: 'none'
   },
+
   mirrorProps: [
     'box-sizing',
     'width',

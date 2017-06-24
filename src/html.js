@@ -72,7 +72,7 @@ function affectLayout (ndUnit) {
  * props.basedOn {String} letters|words
  * props.className {String}
  */
-class HTMLEllipsis extends React.Component {
+class HTMLEllipsis extends React.PureComponent {
   constructor (props) {
     super(props)
     this.state = {
@@ -90,6 +90,9 @@ class HTMLEllipsis extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    if (nextProps.winWidth !== this.props.winWidth) {
+      this.copyStyleToCanvas()
+    }
     this.reflow(nextProps)
   }
 
@@ -101,14 +104,18 @@ class HTMLEllipsis extends React.Component {
     if (this.canvas) return
     const canvas = this.canvas = document.createElement('div')
     canvas.className = `LinesEllipsis-canvas ${this.props.className}`
-    const targetStyle = window.getComputedStyle(this.target)
-    mirrorProps.forEach((key) => {
-      canvas.style[key] = targetStyle[key]
-    })
+    this.copyStyleToCanvas()
     Object.keys(canvasStyle).forEach((key) => {
       canvas.style[key] = canvasStyle[key]
     })
     document.body.appendChild(canvas)
+  }
+
+  copyStyleToCanvas () {
+    const targetStyle = window.getComputedStyle(this.target)
+    mirrorProps.forEach((key) => {
+      this.canvas.style[key] = targetStyle[key]
+    })
   }
 
   reflow (props) {

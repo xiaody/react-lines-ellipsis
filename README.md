@@ -69,6 +69,15 @@ import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
 />
 ```
 
+## Responsive to window resize and orientation change
+```
+import LinesEllipsis from 'react-lines-ellipsis'
+import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
+
+const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis)
+// then just use ResponsiveEllipsis
+```
+
 ## Dev TODOs
 
 - [x] demo page

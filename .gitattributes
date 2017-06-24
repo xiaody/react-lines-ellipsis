@@ -1,2 +1,3 @@
 lib/* -diff
 *bundle.js -diff
+/package-lock.json -diff
