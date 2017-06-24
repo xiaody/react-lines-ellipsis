@@ -14,15 +14,11 @@ function responsiveHOC (wait = 150, debounceOptions) {
       }
 
       componentDidMount () {
-        if (isBrowser) {
-          window.addEventListener('resize', this.onResize)
-        }
+        window.addEventListener('resize', this.onResize)
       }
 
       componentWillUnmount () {
-        if (isBrowser) {
-          window.removeEventListener('resize', this.onResize)
-        }
+        window.removeEventListener('resize', this.onResize)
       }
 
       onResize () {
