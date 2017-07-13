@@ -1,3 +1,5 @@
+v0.7.0 add a loose version
+
 v0.6.0 provide a responsive high order component #2
 
 v0.5.0 add `props.basedOn`.
