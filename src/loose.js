@@ -1,26 +1,34 @@
 const React = require('react')
 
 function LinesEllipsisLoose (props) {
-  const {component: Component = 'div', text, lineHeight} = props
+  const {component: Component, text, lineHeight, maxLine, style, ...rest} = props
   const lineHeightNumber = parseInt(lineHeight, 10)
   const unit = typeof lineHeight === 'string' && lineHeight.trim().endsWith('em')
     ? 'em'
     : 'px'
-  const maxLine = +props.maxLine || 1
+  const maxLineNumber = +maxLine || 1
   return (
     <Component
+      {...rest}
       style={{
+        ...style,
         lineHeight: `${lineHeightNumber}${unit}`,
-        maxHeight: `${maxLine * lineHeightNumber}${unit}`,
+        maxHeight: `${maxLineNumber * lineHeightNumber}${unit}`,
         overflow: 'hidden',
         display: '-webkit-box',
         WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: maxLine
+        WebkitLineClamp: maxLineNumber
       }}
     >
       {text}
     </Component>
   )
+}
+
+LinesEllipsisLoose.defaultProps = {
+  component: 'div',
+  maxLine: 1,
+  style: {}
 }
 
 module.exports = LinesEllipsisLoose
