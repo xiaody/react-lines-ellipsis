@@ -62,10 +62,10 @@ Split by `letters` or `words`. By default it uses a guess based on your text.
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
 
 <HTMLEllipsis
-  unsafeHTML="simple html content"
-  maxLine="5"
-  ellipsis="..."
-  basedOn="letters"
+  unsafeHTML='simple html content'
+  maxLine='5'
+  ellipsis='...'
+  basedOn='letters'
 />
 ```
 
@@ -76,6 +76,23 @@ import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
 
 const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis)
 // then just use ResponsiveEllipsis
+```
+
+## Loose version
+
+This is a non-standardized css-based solution for some webkit-based browsers.
+It may have better render performance but also can be fragile.
+Be sure to test your use case if you use it.
+See https://css-tricks.com/line-clampin/#article-header-id-0 for some introduction.
+
+```jsx
+import LinesEllipsisLoose from 'react-lines-ellipsis/lib/loose'
+
+<LinesEllipsisLoose
+  text='long long text'
+  maxLine='2'
+  lineHeight='16'
+/>
 ```
 
 ## Dev TODOs
