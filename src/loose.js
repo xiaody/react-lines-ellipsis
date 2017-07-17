@@ -2,7 +2,7 @@ const React = require('react')
 
 function LinesEllipsisLoose (props) {
   const {component: Component, text, lineHeight, maxLine, style, ...rest} = props
-  const lineHeightNumber = parseInt(lineHeight, 10)
+  const lineHeightNumber = parseFloat(lineHeight)
   const unit = typeof lineHeight === 'string' && lineHeight.trim().endsWith('em')
     ? 'em'
     : 'px'
