@@ -28,7 +28,7 @@ function responsiveHOC (wait = 150, debounceOptions) {
       }
 
       render () {
-        return <Component {...this.props} {...this.state} />
+        return <Component ref='lineEllipsisChild' {...this.props} {...this.state} />
       }
     }
 
