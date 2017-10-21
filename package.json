@@ -10,8 +10,8 @@
     "test": "standard",
     "prebuild": "mkdir -p lib",
     "build": "for js in src/*.js; do babel $js > \"lib/$(basename $js)\"; done",
-    "docs": "browserify -e docs/app.js | uglifyjs -m > docs/app.bundle.js",
-    "docs:watch": "watchify -e docs/app.js -o docs/app.bundle.js",
+    "docs": "browserify -e docs/app.js --transform-key=docs | uglifyjs -m > docs/app.bundle.js",
+    "docs:watch": "watchify -e docs/app.js --transform-key=docs -o docs/app.bundle.js",
     "prepare": "npm run build"
   },
   "keywords": [
@@ -54,7 +54,7 @@
     ]
   },
   "browserify": {
-    "transform": [
+    "docs": [
       "babelify",
       "aliasify"
     ]
