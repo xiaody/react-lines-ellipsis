@@ -112,10 +112,12 @@ class HTMLEllipsis extends React.PureComponent {
   }
 
   copyStyleToCanvas () {
-    const targetStyle = window.getComputedStyle(this.target)
-    mirrorProps.forEach((key) => {
-      this.canvas.style[key] = targetStyle[key]
-    })
+    if (this.target) {
+      const targetStyle = window.getComputedStyle(this.target)
+      mirrorProps.forEach((key) => {
+        this.canvas.style[key] = targetStyle[key]
+      })
+    }
   }
 
   reflow (props) {
