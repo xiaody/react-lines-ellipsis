@@ -1,7 +1,7 @@
 const React = require('react')
-const {canvasStyle, mirrorProps} = require('./common')
+const { canvasStyle, mirrorProps } = require('./common')
 
-function prevSibling (node, count) {
+function prevSibling(node, count) {
   while (node && count--) {
     node = node.previousElementSibling
   }
@@ -17,7 +17,7 @@ function prevSibling (node, count) {
  * props.className {String}
  */
 class LinesEllipsis extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       text: props.text,
@@ -28,23 +28,23 @@ class LinesEllipsis extends React.PureComponent {
     this.canvas = null
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.initCanvas()
     this.reflow(this.props)
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.winWidth !== this.props.winWidth) {
       this.copyStyleToCanvas()
     }
     this.reflow(nextProps)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.canvas.parentNode.removeChild(this.canvas)
   }
 
-  initCanvas () {
+  initCanvas() {
     if (this.canvas) return
     const canvas = this.canvas = document.createElement('div')
     canvas.className = `LinesEllipsis-canvas ${this.props.className}`
@@ -55,14 +55,14 @@ class LinesEllipsis extends React.PureComponent {
     document.body.appendChild(canvas)
   }
 
-  copyStyleToCanvas () {
+  copyStyleToCanvas() {
     const targetStyle = window.getComputedStyle(this.target)
     mirrorProps.forEach((key) => {
       this.canvas.style[key] = targetStyle[key]
     })
   }
 
-  reflow (props) {
+  reflow(props) {
     /* eslint-disable no-control-regex */
     const basedOn = props.basedOn || /^[\x00-\x7F]+$/.test(props.text) ? 'words' : 'letters'
     switch (basedOn) {
@@ -87,7 +87,7 @@ class LinesEllipsis extends React.PureComponent {
     })
   }
 
-  calcIndexes () {
+  calcIndexes() {
     const indexes = [0]
     let elt = this.canvas.firstElementChild
     if (!elt) return indexes
@@ -109,7 +109,7 @@ class LinesEllipsis extends React.PureComponent {
     return indexes
   }
 
-  putEllipsis (indexes) {
+  putEllipsis(indexes) {
     if (indexes.length <= this.maxLine) return -1
     const lastIndex = indexes[this.maxLine]
     const units = this.units.slice(0, lastIndex)
@@ -134,11 +134,21 @@ class LinesEllipsis extends React.PureComponent {
     return units.length
   }
 
-  render () {
-    const {text, clamped} = this.state
-    const {ellipsis, trimRight, className} = this.props
+  putElement(element) {
+    if (element === 'div' || element === 'p' || element === 'span') {
+      return element
+    } else {
+      throw new Error(`Unsupported element option: ${element}`)
+    }
+  }
+
+  render() {
+    const { text, clamped } = this.state
+    const { ellipsis, trimRight, className, element } = this.props
+    const TagName = putElement(element);
+
     return (
-      <div
+      <TagName
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
         ref={node => (this.target = node)}
       >
@@ -150,7 +160,7 @@ class LinesEllipsis extends React.PureComponent {
         {clamped &&
           <span className='LinesEllipsis-ellipsis'>{ellipsis}</span>
         }
-      </div>
+      </TagName>
     )
   }
 }
@@ -160,7 +170,8 @@ LinesEllipsis.defaultProps = {
   maxLine: 1,
   ellipsis: '…', // &hellip;
   trimRight: true,
-  className: ''
+  className: '',
+  element: 'div'
 }
 
 module.exports = LinesEllipsis
