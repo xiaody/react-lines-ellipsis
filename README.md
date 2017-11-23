@@ -25,6 +25,7 @@ import LinesEllipsis from 'react-lines-ellipsis'
   ellipsis='...'
   trimRight
   basedOn='letters'
+  element='p' // default is div
 />
 ```
 
@@ -94,6 +95,11 @@ import LinesEllipsisLoose from 'react-lines-ellipsis/lib/loose'
   lineHeight='16'
 />
 ```
+
+## Supported element options
+- div (default)
+- span
+- p
 
 ## Dev TODOs
 
