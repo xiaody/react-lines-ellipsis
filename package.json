@@ -1,5 +1,5 @@
 {
-  "name": "@ebayn/react-lines-ellipsis",
+  "name": "react-lines-ellipsis",
   "version": "0.8.1",
   "description": "Simple multiline ellipsis component for React.JS",
   "main": "lib/index.js",
@@ -25,10 +25,7 @@
   ],
   "author": "xiaody",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/xiaody/react-lines-ellipsis"
-  },
+  "repository": "xiaody/react-lines-ellipsis",
   "peerDependencies": {
     "react": "*",
     "react-dom": "*"
