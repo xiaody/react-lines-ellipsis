@@ -28,11 +28,15 @@ function responsiveHOC (wait = 150, debounceOptions) {
       }
 
       render () {
-        return <Component {...this.props} {...this.state} />
+        const {innerRef, ...rest} = this.props
+        return <Component ref={innerRef} {...rest} {...this.state} />
       }
     }
 
     Responsive.displayName = `Responsive(${Component.displayName || Component.name})`
+    Responsive.defaultProps = {
+      innerRef () {}
+    }
     return Responsive
   }
 }

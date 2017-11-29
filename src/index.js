@@ -134,6 +134,11 @@ class LinesEllipsis extends React.PureComponent {
     return units.length
   }
 
+  // expose
+  isClamped () {
+    return this.state.clamped
+  }
+
   render () {
     const {text, clamped} = this.state
     const {component: Component, ellipsis, trimRight, className} = this.props

@@ -185,6 +185,11 @@ class HTMLEllipsis extends React.PureComponent {
     return frag
   }
 
+  // expose
+  isClamped () {
+    return this.state.clamped
+  }
+
   render () {
     const {html, clamped} = this.state
     const {component: Component, className, unsafeHTML} = this.props

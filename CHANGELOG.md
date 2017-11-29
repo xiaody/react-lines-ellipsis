@@ -1,3 +1,5 @@
+v0.10.0 Add `props.innerRef` for the HOC. #3
+
 v0.9.0 Add `props.component`. #6
 
 v0.8.0 Fix a build issue for browserify users. #4
