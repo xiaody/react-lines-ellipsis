@@ -50,6 +50,10 @@ Trim right the clamped text to avoid putting the ellipsis on an empty line. Defa
 
 Split by `letters` or `words`. By default it uses a guess based on your text.
 
+### props.component {String}
+
+The tagName of the rendered node. Default `div`.
+
 ## Limitations
 
 - only accept plain text by default. Use `lib/html.js` for experimental rich html support

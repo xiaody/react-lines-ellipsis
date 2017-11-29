@@ -70,6 +70,7 @@ class App extends Component {
           ? (
             <div onClick={this.onTextClick} onKeyDown={this.onTextKey} tabIndex='0'>
               <HTMLEllipsis
+                component='article'
                 className='ellipsis-html'
                 unsafeHTML={text}
                 maxLine={maxLine}
@@ -77,7 +78,7 @@ class App extends Component {
               />
             </div>
           )
-          : <div className='ellipsis-html' dangerouslySetInnerHTML={{__html: text}} />
+          : <article className='ellipsis-html' dangerouslySetInnerHTML={{__html: text}} />
         }
         <textarea
           className='text-editor'
@@ -102,6 +103,7 @@ class App extends Component {
           ? (
             <div onClick={this.onTextClick} onKeyDown={this.onTextKey} tabIndex='0'>
               <LinesEllipsis
+                component='article'
                 className='ellipsis-text'
                 text={text}
                 maxLine={maxLine}
@@ -109,7 +111,7 @@ class App extends Component {
               />
             </div>
           )
-          : <div className='ellipsis-text'>{text}</div>
+          : <article className='ellipsis-text'>{text}</article>
         }
         <textarea
           className='text-editor'
