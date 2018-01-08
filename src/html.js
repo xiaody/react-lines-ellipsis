@@ -160,7 +160,7 @@ class HTMLEllipsis extends React.PureComponent {
     const ndEllipsis = this.makeEllipsisSpan()
     findBlockAncestor(ndPrevUnit).appendChild(ndEllipsis)
 
-    while (ndPrevUnit && (
+    while (this.nlUnits.length && (
       !affectLayout(ndPrevUnit) ||
       ndEllipsis.offsetHeight > ndPrevUnit.offsetHeight ||
       ndEllipsis.offsetTop > ndPrevUnit.offsetTop)
