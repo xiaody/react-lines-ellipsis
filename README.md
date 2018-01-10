@@ -56,9 +56,10 @@ The tagName of the rendered node. Default `div`.
 
 ## Limitations
 
-- only accept plain text by default. Use `lib/html.js` for experimental rich html support
+- not clamps text on the server side or with JavaScript disabled
+- only accepts plain text by default. Use `lib/html.js` for experimental rich html support
 - can be fooled by some special styles: `::first-letter`, ligatures, etc.
-- require modern browsers env
+- requires modern browsers env
 
 ## Experimental html truncation
 
