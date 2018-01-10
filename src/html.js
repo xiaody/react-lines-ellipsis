@@ -137,8 +137,11 @@ class HTMLEllipsis extends React.PureComponent {
     const len = nlUnits.length
     if (!nlUnits.length) return indexes
 
+    const nd1stLayoutUnit = nlUnits.find(affectLayout)
+    if (!nd1stLayoutUnit) return indexes
+
     let line = 1
-    let offsetTop = nlUnits[0].offsetTop
+    let offsetTop = nd1stLayoutUnit.offsetTop
     for (let i = 1; i < len; i++) {
       if (affectLayout(nlUnits[i]) && nlUnits[i].offsetTop - offsetTop > 1) {
         line++
@@ -156,20 +159,21 @@ class HTMLEllipsis extends React.PureComponent {
     if (indexes.length <= this.maxLine) return false
     this.nlUnits = this.nlUnits.slice(0, indexes[this.maxLine])
     let ndPrevUnit = this.nlUnits.pop()
-    removeFollowingElementLeaves(ndPrevUnit, this.canvas)
     const ndEllipsis = this.makeEllipsisSpan()
-    findBlockAncestor(ndPrevUnit).appendChild(ndEllipsis)
 
-    while (ndPrevUnit && (
+    do {
+      removeFollowingElementLeaves(ndPrevUnit, this.canvas)
+      findBlockAncestor(ndPrevUnit).appendChild(ndEllipsis)
+      ndPrevUnit = this.nlUnits.pop()
+    } while (ndPrevUnit && (
       !affectLayout(ndPrevUnit) ||
       ndEllipsis.offsetHeight > ndPrevUnit.offsetHeight ||
       ndEllipsis.offsetTop > ndPrevUnit.offsetTop)
-    ) {
-      ndPrevUnit = this.nlUnits.pop()
-      removeFollowingElementLeaves(ndPrevUnit, this.canvas)
-      findBlockAncestor(ndPrevUnit).appendChild(ndEllipsis)
+    )
+
+    if (ndPrevUnit) {
+      unwrapTextNode(ndPrevUnit)
     }
-    unwrapTextNode(ndPrevUnit)
     this.nlUnits.forEach(unwrapTextNode)
 
     return true
