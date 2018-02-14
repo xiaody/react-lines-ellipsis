@@ -64,7 +64,7 @@ class LinesEllipsis extends React.PureComponent {
 
   reflow (props) {
     /* eslint-disable no-control-regex */
-    const basedOn = props.basedOn || /^[\x00-\x7F]+$/.test(props.text) ? 'words' : 'letters'
+    const basedOn = props.basedOn || (/^[\x00-\x7F]+$/.test(props.text) ? 'words' : 'letters')
     switch (basedOn) {
       case 'words':
         this.units = props.text.split(/\b|(?=\W)/)
