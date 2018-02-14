@@ -60,6 +60,7 @@ class LinesEllipsis extends React.PureComponent {
     mirrorProps.forEach((key) => {
       this.canvas.style[key] = targetStyle[key]
     })
+    this.canvas.style.width = this.target.clientWidth + 'px'
   }
 
   reflow (props) {

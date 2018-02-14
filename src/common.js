@@ -12,7 +12,6 @@ module.exports = {
 
   mirrorProps: [
     'box-sizing',
-    'width',
     'font-size',
     'font-weight',
     'font-family',
