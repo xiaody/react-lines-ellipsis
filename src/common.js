@@ -22,6 +22,8 @@ module.exports = {
     'white-space',
     'word-break',
     'padding-left',
-    'padding-right'
+    'padding-right',
+    'word-break',
+    'overflow-wrap'
   ]
 }
