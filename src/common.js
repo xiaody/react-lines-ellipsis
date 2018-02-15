@@ -12,7 +12,6 @@ module.exports = {
 
   mirrorProps: [
     'box-sizing',
-    'width',
     'font-size',
     'font-weight',
     'font-family',
@@ -22,6 +21,8 @@ module.exports = {
     'white-space',
     'word-break',
     'padding-left',
-    'padding-right'
+    'padding-right',
+    'word-break',
+    'overflow-wrap'
   ]
 }
