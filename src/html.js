@@ -196,7 +196,7 @@ class HTMLEllipsis extends React.PureComponent {
 
   render () {
     const {html, clamped} = this.state
-    const {component: Component, className, unsafeHTML, maxLine, ellipsis, ...rest} = this.props
+    const {component: Component, className, unsafeHTML, maxLine, ellipsis, basedOn, ...rest} = this.props
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
