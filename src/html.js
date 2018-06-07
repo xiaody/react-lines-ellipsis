@@ -196,11 +196,12 @@ class HTMLEllipsis extends React.PureComponent {
 
   render () {
     const {html, clamped} = this.state
-    const {component: Component, className, unsafeHTML} = this.props
+    const {component: Component, className, unsafeHTML, maxLine, ellipsis, ...rest} = this.props
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
         ref={node => (this.target = node)}
+        {...rest}
       >
         <div dangerouslySetInnerHTML={{__html: clamped ? html : unsafeHTML}} />
       </Component>
