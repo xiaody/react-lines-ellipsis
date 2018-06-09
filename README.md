@@ -24,6 +24,7 @@ import LinesEllipsis from 'react-lines-ellipsis'
   text='long long text'
   maxLine='3'
   ellipsis='...'
+  ellipsesHTML='...' // Note that ellipsesHTML will supercede ellipses if passed
   trimRight
   basedOn='letters'
 />
@@ -42,6 +43,10 @@ Max count of lines allowed. Default `1`.
 ### props.ellipsis {String}
 
 Text content of the ellipsis. Default `…`.
+
+### props.ellipsisHTML {String}
+
+HTML content of the ellipsis.
 
 ### props.trimRight {Boolean}
 

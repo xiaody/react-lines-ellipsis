@@ -184,7 +184,11 @@ class HTMLEllipsis extends React.PureComponent {
     frag.appendChild(document.createElement('wbr'))
     const ndEllipsis = document.createElement('span')
     ndEllipsis.className = 'LinesEllipsis-ellipsis'
-    ndEllipsis.textContent = this.props.ellipsis
+    if (this.props.ellipsisHTML) {
+      ndEllipsis.innerHTML = this.props.ellipsisHTML
+    } else {
+      ndEllipsis.textContent = this.props.ellipsis
+    }
     frag.appendChild(ndEllipsis)
     return frag
   }
@@ -196,7 +200,9 @@ class HTMLEllipsis extends React.PureComponent {
 
   render () {
     const {html, clamped} = this.state
-    const {component: Component, className, unsafeHTML, maxLine, ellipsis, basedOn, ...rest} = this.props
+    const {component: Component, className, unsafeHTML, maxLine, ellipsis,
+           ellipsisHTML, trimRight, winWidth, basedOn, ...rest} = this.props
+
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
