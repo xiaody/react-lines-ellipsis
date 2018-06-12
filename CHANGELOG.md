@@ -1,3 +1,5 @@
+v0.11.0 Pass rest props to `props.component`; Add `props.ellipsisHTML` for HTMLEllipsis.
+
 v0.10.0 Add `props.innerRef` for the HOC. #3
 
 v0.9.0 Add `props.component`. #6
