@@ -74,7 +74,7 @@ class App extends Component {
                 className='ellipsis-html'
                 unsafeHTML={text}
                 maxLine={maxLine}
-                ellipsis='... read more'
+                ellipsisHTML='<i>... read more</i>'
               />
             </div>
           )

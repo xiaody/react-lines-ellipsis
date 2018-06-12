@@ -1,5 +1,6 @@
 const React = require('react')
 const {canvasStyle, mirrorProps} = require('./common')
+const {omit} = require('./helpers')
 
 function hookNode (node, basedOn) {
   /* eslint-env browser */
@@ -64,6 +65,18 @@ function findBlockAncestor (node) {
 function affectLayout (ndUnit) {
   return !!(ndUnit.offsetHeight && (ndUnit.offsetWidth || /\S/.test(ndUnit.textContent)))
 }
+
+const defaultProps = {
+  component: 'div',
+  unsafeHTML: '',
+  maxLine: 1,
+  ellipsis: '…', // &hellip;
+  ellipsisHTML: undefined,
+  className: '',
+  basedOn: undefined,
+  winWidth: undefined // for the HOC
+}
+const usedProps = Object.keys(defaultProps)
 
 /**
  * props.unsafeHTML {String} the rich content you want to clamp
@@ -180,11 +193,16 @@ class HTMLEllipsis extends React.PureComponent {
   }
 
   makeEllipsisSpan () {
+    const {ellipsisHTML, ellipsis} = this.props
     const frag = document.createElement('span')
     frag.appendChild(document.createElement('wbr'))
     const ndEllipsis = document.createElement('span')
     ndEllipsis.className = 'LinesEllipsis-ellipsis'
-    ndEllipsis.textContent = this.props.ellipsis
+    if (ellipsisHTML) {
+      ndEllipsis.innerHTML = ellipsisHTML
+    } else {
+      ndEllipsis.textContent = ellipsis
+    }
     frag.appendChild(ndEllipsis)
     return frag
   }
@@ -196,12 +214,12 @@ class HTMLEllipsis extends React.PureComponent {
 
   render () {
     const {html, clamped} = this.state
-    const {component: Component, className, unsafeHTML, maxLine, ellipsis, basedOn, ...rest} = this.props
+    const {component: Component, className, unsafeHTML, ...rest} = this.props
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
         ref={node => (this.target = node)}
-        {...rest}
+        {...omit(rest, usedProps)}
       >
         <div dangerouslySetInnerHTML={{__html: clamped ? html : unsafeHTML}} />
       </Component>
@@ -209,12 +227,6 @@ class HTMLEllipsis extends React.PureComponent {
   }
 }
 
-HTMLEllipsis.defaultProps = {
-  component: 'div',
-  unsafeHTML: '',
-  maxLine: 1,
-  ellipsis: '…', // &hellip;
-  className: ''
-}
+HTMLEllipsis.defaultProps = defaultProps
 
 module.exports = HTMLEllipsis

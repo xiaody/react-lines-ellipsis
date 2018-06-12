@@ -1,5 +1,6 @@
 const React = require('react')
 const {canvasStyle, mirrorProps} = require('./common')
+const {omit} = require('./helpers')
 
 function prevSibling (node, count) {
   while (node && count--) {
@@ -8,6 +9,17 @@ function prevSibling (node, count) {
   return node
 }
 
+const defaultProps = {
+  component: 'div',
+  text: '',
+  maxLine: 1,
+  ellipsis: '…', // &hellip;
+  trimRight: true,
+  className: '',
+  basedOn: undefined,
+  winWidth: undefined // for the HOC
+}
+const usedProps = Object.keys(defaultProps)
 /**
  * props.text {String} the text you want to clamp
  * props.maxLine {Number|String} max lines allowed
@@ -141,12 +153,12 @@ class LinesEllipsis extends React.PureComponent {
 
   render () {
     const {text, clamped} = this.state
-    const {component: Component, ellipsis, trimRight, className, text: propText, maxLine, basedOn, ...rest} = this.props
+    const {component: Component, ellipsis, trimRight, className, ...rest} = this.props
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
         ref={node => (this.target = node)}
-        {...rest}
+        {...omit(rest, usedProps)}
       >
         {clamped && trimRight
           ? text.replace(/[\s\uFEFF\xA0]+$/, '')
@@ -161,13 +173,6 @@ class LinesEllipsis extends React.PureComponent {
   }
 }
 
-LinesEllipsis.defaultProps = {
-  component: 'div',
-  text: '',
-  maxLine: 1,
-  ellipsis: '…', // &hellip;
-  trimRight: true,
-  className: ''
-}
+LinesEllipsis.defaultProps = defaultProps
 
 module.exports = LinesEllipsis

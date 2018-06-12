@@ -39,7 +39,7 @@ The text you want to clamp.
 
 Max count of lines allowed. Default `1`.
 
-### props.ellipsis {String}
+### props.ellipsis {Node}
 
 Text content of the ellipsis. Default `…`.
 
@@ -63,6 +63,13 @@ The tagName of the rendered node. Default `div`.
 - requires modern browsers env
 
 ## Experimental html truncation
+
+Instead of `props.text`, use `props.unsafeHTML` to pass your content.
+
+Also, `props.ellipsis` here only supports plain text,
+use `props.ellipsisHTML` is to fully customize the ellipsis style.
+
+`props.trimRight` is not supported by `HTMLEllipsis`.
 
 ```jsx
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
@@ -100,9 +107,3 @@ import LinesEllipsisLoose from 'react-lines-ellipsis/lib/loose'
   lineHeight='16'
 />
 ```
-
-## Dev TODOs
-
-- [x] demo page
-- [ ] test cases
-- [ ] improve performance
