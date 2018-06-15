@@ -79,7 +79,7 @@ class LinesEllipsis extends React.PureComponent {
     const basedOn = props.basedOn || (/^[\x00-\x7F]+$/.test(props.text) ? 'words' : 'letters')
     switch (basedOn) {
       case 'words':
-        this.units = props.text.split(/\b|(?=\W)/)
+        this.units = props.text.toString().split(/\b|(?=\W)/)
         break
       case 'letters':
         this.units = Array.from(props.text)
