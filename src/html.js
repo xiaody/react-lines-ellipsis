@@ -74,7 +74,8 @@ const defaultProps = {
   ellipsisHTML: undefined,
   className: '',
   basedOn: undefined,
-  winWidth: undefined // for the HOC
+  winWidth: undefined, // for the HOC
+  onTruncate: undefined
 }
 const usedProps = Object.keys(defaultProps)
 
@@ -141,6 +142,9 @@ class HTMLEllipsis extends React.PureComponent {
     this.setState({clamped})
     if (clamped) {
       this.setState({html: this.canvas.innerHTML})
+    }
+    if (this.props.onTruncate) {
+      this.props.onTruncate(clamped)
     }
   }
 
