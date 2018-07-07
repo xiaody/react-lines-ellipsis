@@ -135,13 +135,18 @@ class HTMLEllipsis extends React.PureComponent {
     /* eslint-disable no-control-regex */
     this.maxLine = +props.maxLine || 1
     this.canvas.innerHTML = props.unsafeHTML
-    const basedOn = props.basedOn || /^[\x00-\x7F]+$/.test(props.unsafeHTML) ? 'words' : 'letters'
+    const basedOn = props.basedOn || (/^[\x00-\x7F]+$/.test(props.unsafeHTML) ? 'words' : 'letters')
     hookNode(this.canvas, basedOn)
     const clamped = this.putEllipsis(this.calcIndexes())
-    this.setState({clamped})
+    this.setClampedState({clamped})
     if (clamped) {
       this.setState({html: this.canvas.innerHTML})
     }
+  }
+
+  setClampedState (clamped) {
+    this.clamped = clamped
+    this.setState({clamped})
   }
 
   calcIndexes () {
@@ -209,7 +214,7 @@ class HTMLEllipsis extends React.PureComponent {
 
   // expose
   isClamped () {
-    return this.state.clamped
+    return this.clamped // do not use state.clamped. #27
   }
 
   render () {

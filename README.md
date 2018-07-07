@@ -55,6 +55,12 @@ Split by `letters` or `words`. By default it uses a guess based on your text.
 
 The tagName of the rendered node. Default `div`.
 
+## Methods
+
+### isClamped() {Boolean}
+
+Is the text content clamped.
+
 ## Limitations
 
 - not clamps text on the server side or with JavaScript disabled

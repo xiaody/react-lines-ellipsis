@@ -93,10 +93,15 @@ class LinesEllipsis extends React.PureComponent {
     }).join('')
     const ellipsisIndex = this.putEllipsis(this.calcIndexes())
     const clamped = ellipsisIndex > -1
+    this.setClampedState(clamped)
     this.setState({
-      clamped,
       text: clamped ? this.units.slice(0, ellipsisIndex).join('') : props.text
     })
+  }
+
+  setClampedState (clamped) {
+    this.clamped = clamped
+    this.setState({clamped})
   }
 
   calcIndexes () {
@@ -148,7 +153,7 @@ class LinesEllipsis extends React.PureComponent {
 
   // expose
   isClamped () {
-    return this.state.clamped
+    return this.clamped // do not use state.clamped. #27
   }
 
   render () {
