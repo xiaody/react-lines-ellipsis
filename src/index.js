@@ -17,6 +17,7 @@ const defaultProps = {
   trimRight: true,
   className: '',
   basedOn: undefined,
+  onReflow () {},
   winWidth: undefined // for the HOC
 }
 const usedProps = Object.keys(defaultProps)
@@ -56,6 +57,13 @@ class LinesEllipsis extends React.PureComponent {
     this.canvas.parentNode.removeChild(this.canvas)
   }
 
+  setState (state, callback) {
+    if (typeof state.clamped !== 'undefined') {
+      this.clamped = state.clamped
+    }
+    return super.setState(state, callback)
+  }
+
   initCanvas () {
     if (this.canvas) return
     const canvas = this.canvas = document.createElement('div')
@@ -93,15 +101,11 @@ class LinesEllipsis extends React.PureComponent {
     }).join('')
     const ellipsisIndex = this.putEllipsis(this.calcIndexes())
     const clamped = ellipsisIndex > -1
-    this.setClampedState(clamped)
-    this.setState({
+    const newState = {
+      clamped,
       text: clamped ? this.units.slice(0, ellipsisIndex).join('') : props.text
-    })
-  }
-
-  setClampedState (clamped) {
-    this.clamped = clamped
-    this.setState({clamped})
+    }
+    this.setState(newState, props.onReflow.bind(this, newState))
   }
 
   calcIndexes () {

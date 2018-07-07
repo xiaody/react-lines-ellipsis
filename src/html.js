@@ -74,6 +74,7 @@ const defaultProps = {
   ellipsisHTML: undefined,
   className: '',
   basedOn: undefined,
+  onReflow () {},
   winWidth: undefined // for the HOC
 }
 const usedProps = Object.keys(defaultProps)
@@ -113,6 +114,13 @@ class HTMLEllipsis extends React.PureComponent {
     this.canvas.parentNode.removeChild(this.canvas)
   }
 
+  setState (state, callback) {
+    if (typeof state.clamped !== 'undefined') {
+      this.clamped = state.clamped
+    }
+    return super.setState(state, callback)
+  }
+
   initCanvas () {
     if (this.canvas) return
     const canvas = this.canvas = document.createElement('div')
@@ -138,15 +146,11 @@ class HTMLEllipsis extends React.PureComponent {
     const basedOn = props.basedOn || (/^[\x00-\x7F]+$/.test(props.unsafeHTML) ? 'words' : 'letters')
     hookNode(this.canvas, basedOn)
     const clamped = this.putEllipsis(this.calcIndexes())
-    this.setClampedState({clamped})
-    if (clamped) {
-      this.setState({html: this.canvas.innerHTML})
+    const newState = {
+      clamped,
+      html: this.canvas.innerHTML
     }
-  }
-
-  setClampedState (clamped) {
-    this.clamped = clamped
-    this.setState({clamped})
+    this.setState(newState, props.onReflow.bind(this, newState))
   }
 
   calcIndexes () {

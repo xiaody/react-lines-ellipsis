@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "test": "standard",
+    "lint:fix": "standard --fix",
     "prebuild": "mkdir -p lib",
     "build": "for js in src/*.js; do babel $js > \"lib/$(basename $js)\"; done",
     "docs": "browserify -e docs/app.js --transform-key=docs | uglifyjs -m > docs/app.bundle.js",
@@ -44,7 +45,7 @@
     "preact-compat": "3.18.0",
     "raf": "3.4.0",
     "standard": "11.0.1",
-    "uglify-js": "3.4.0",
+    "uglify-js": "3.4.3",
     "watchify": "3.11.0"
   },
   "standard": {

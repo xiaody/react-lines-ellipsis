@@ -9,6 +9,7 @@ const responsiveHOC = require('../src/responsiveHOC')
 const LinesEllipsis = responsiveHOC()(require('../src/index'))
 const HTMLEllipsis = responsiveHOC()(require('../src/html'))
 const lorem = require('./lorem')
+const log = console.log.bind(console)
 
 const {h, render, Component} = preact
 const lang = window.location.search.slice(1)
@@ -32,6 +33,10 @@ class App extends Component {
     this.onTextKey = this.onTextKey.bind(this)
     this.onTextEdit = debounce(this.onTextEdit.bind(this), 100)
     this.onChangeLines = debounce(this.onChangeLines.bind(this))
+  }
+
+  componentDidMount () {
+    log(`isClamped: ${this.linesEllipsis.isClamped()} when page didMount`)
   }
 
   onTextClick (e) {
@@ -71,11 +76,13 @@ class App extends Component {
           ? (
             <div onClick={this.onTextClick} onKeyDown={this.onTextKey} tabIndex='0'>
               <HTMLEllipsis
+                innerRef={node => { this.linesEllipsis = node }}
                 component='article'
                 className='ellipsis-html'
                 unsafeHTML={text}
                 maxLine={maxLine}
                 ellipsisHTML='<i>... read more</i>'
+                onReflow={log}
               />
             </div>
           )
@@ -104,11 +111,13 @@ class App extends Component {
           ? (
             <div onClick={this.onTextClick} onKeyDown={this.onTextKey} tabIndex='0'>
               <LinesEllipsis
+                innerRef={node => { this.linesEllipsis = node }}
                 component='article'
                 className='ellipsis-text'
                 text={text}
                 maxLine={maxLine}
                 ellipsis='... read more'
+                onReflow={log}
               />
             </div>
           )

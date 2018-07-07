@@ -1,3 +1,7 @@
+v0.13.0 Add `props.onReflow()`.
+
+v0.12.0 Make `isClamped` more accurate. #27
+
 v0.11.0 Pass rest props to `props.component`; Add `props.ellipsisHTML` for HTMLEllipsis.
 
 v0.10.0 Add `props.innerRef` for the HOC. #3
