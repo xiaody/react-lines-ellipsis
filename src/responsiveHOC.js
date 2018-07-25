@@ -10,21 +10,26 @@ function responsiveHOC (wait = 150, debounceOptions) {
         this.state = {
           winWidth: isBrowser ? window.innerWidth : 0
         }
+        this._isMounted = false
         this.onResize = debounce(this.onResize.bind(this), wait, debounceOptions)
       }
 
       componentDidMount () {
+        this._isMounted = true
         window.addEventListener('resize', this.onResize)
       }
 
       componentWillUnmount () {
+        this._isMounted = false
         window.removeEventListener('resize', this.onResize)
       }
 
       onResize () {
-        this.setState({
-          winWidth: window.innerWidth
-        })
+        if (this._isMounted) {
+          this.setState({
+            winWidth: window.innerWidth
+          })
+        }
       }
 
       render () {
