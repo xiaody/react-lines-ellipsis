@@ -55,6 +55,33 @@ Split by `letters` or `words`. By default it uses a guess based on your text.
 
 The tagName of the rendered node. Default `div`.
 
+### props.onReflow {Function} (version >= 0.13.0)
+
+Callback function invoked when the reflow logic complete.
+
+Type: ({ clamped: boolean, text: string }) => any
+
+```jsx
+  handleReflow = (rleState) => {
+    const {
+      clamped,
+      text,
+    } = rleState
+    // do sth...
+  }
+
+  render() {
+    const text = 'lorem text'
+    return (
+      <LinesEllipsis
+        text={text}
+        onReflow={this.handleReflow}
+        maxLine={3}
+      />
+    )
+  }
+```
+
 ## Methods
 
 ### isClamped() {Boolean}
