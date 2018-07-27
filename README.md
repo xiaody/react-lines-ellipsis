@@ -59,7 +59,7 @@ The tagName of the rendered node. Default `div`.
 
 Callback function invoked when the reflow logic complete.
 
-Type: ({ clamped: boolean, text: string }) => any
+Type: `({ clamped: boolean, text: string }) => any`
 
 ```jsx
   handleReflow = (rleState) => {
@@ -101,6 +101,8 @@ Instead of `props.text`, use `props.unsafeHTML` to pass your content.
 
 Also, `props.ellipsis` here only supports plain text,
 use `props.ellipsisHTML` is to fully customize the ellipsis style.
+
+The `props.onReflow` gives you `html` instead of `text`.
 
 `props.trimRight` is not supported by `HTMLEllipsis`.
 
