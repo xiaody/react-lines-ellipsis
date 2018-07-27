@@ -1,3 +1,5 @@
+v0.13.1 Document `props.onReflow()`; HOC: clear listener when unmount. #31
+
 v0.13.0 Add `props.onReflow()`.
 
 v0.12.0 Make `isClamped` more accurate. #27
