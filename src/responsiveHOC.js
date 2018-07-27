@@ -19,6 +19,7 @@ function responsiveHOC (wait = 150, debounceOptions) {
 
       componentWillUnmount () {
         window.removeEventListener('resize', this.onResize)
+        this.onResize.cancel()
       }
 
       onResize () {
