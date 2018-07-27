@@ -29,7 +29,7 @@ const usedProps = Object.keys(defaultProps)
  * props.basedOn {String} letters|words
  * props.className {String}
  */
-class LinesEllipsis extends React.PureComponent {
+export default class LinesEllipsis extends React.PureComponent {
   constructor (props) {
     super(props)
     this.state = {
@@ -105,7 +105,7 @@ class LinesEllipsis extends React.PureComponent {
       clamped,
       text: clamped ? this.units.slice(0, ellipsisIndex).join('') : props.text
     }
-    this.setState(newState, props.onReflow.bind(this, newState))
+    this.setState(newState, props.onReflow && props.onReflow.bind(this, newState))
   }
 
   calcIndexes () {
@@ -138,7 +138,6 @@ class LinesEllipsis extends React.PureComponent {
     this.canvas.innerHTML = units.map((c, i) => {
       return `<span class='LinesEllipsis-unit'>${c}</span>`
     }).join('') + `<wbr><span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`
-
     const ndEllipsis = this.canvas.lastElementChild
     let ndPrevUnit = prevSibling(ndEllipsis, 2)
     while (ndPrevUnit &&
