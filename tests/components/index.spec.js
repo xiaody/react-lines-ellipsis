@@ -7,14 +7,16 @@ import LinesEllipsis from '../../src/index'
 describe('Test main functions of index.js', () => {
   let component
   let instance
-  // eslint-disable-next-line no-undef
   beforeEach(() => {
     jest
       .spyOn(window, 'getComputedStyle')
       .mockImplementation(() => ({display: 'block', 'padding-right': '10px'}))
     component = shallow(<LinesEllipsis />)
     instance = component.instance()
-    instance.reflow({ text: 'this is a test hello this is a test test test test', basedOn: 'words', maxLine: 1,
+    instance.reflow({
+      text: 'this is a test hello this is a test test test test',
+      basedOn: 'words',
+      maxLine: 1,
       onReflow: instance.reflow })
   })
 
@@ -36,5 +38,15 @@ describe('Test main functions of index.js', () => {
     instance.putEllipsis([0, 2, 4])
     expect(instance.canvas.innerHTML).toEqual('<span class="LinesEllipsis-unit">this</span><span ' +
       'class="LinesEllipsis-unit"> </span><wbr><span class="LinesEllipsis-ellipsis">…</span>')
+  })
+
+  it('Confirm proper functions called on component mount ', () => {
+    const inits = jest
+      .spyOn(instance, 'initCanvas')
+    const reflow = jest
+      .spyOn(instance, 'reflow')
+    instance.componentDidMount()
+    expect(reflow).toHaveBeenCalled()
+    expect(inits).toHaveBeenCalled()
   })
 })
