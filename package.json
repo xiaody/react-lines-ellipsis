@@ -28,6 +28,8 @@
   "license": "MIT",
   "repository": "xiaody/react-lines-ellipsis",
   "peerDependencies": {
+    "preact": "8.2.9",
+    "preact-compat": "3.18.0",
     "react": "*",
     "react-dom": "*"
   },

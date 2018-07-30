@@ -49,4 +49,31 @@ describe('Test main functions of index.js', () => {
     expect(reflow).toHaveBeenCalled()
     expect(inits).toHaveBeenCalled()
   })
+
+  it('trims trailing whitespace', () => {
+    const props = {
+      ellipsis: 'dotdotdot',
+      trimRight: true,
+      maxLine: 1,
+      text: 'Whitespace ' // trailing tab
+    }
+
+    component = shallow(<LinesEllipsis {...props} />)
+    component.instance().componentDidMount()
+    const comp = component.find('.LinesEllipsis')
+    expect(comp.text).not.toContain(' ') // trailing tab
+  })
+
+  it('removes canvas div on unmount', () => {
+    const props = {
+      ellipsis: 'dotdotdot',
+      trimRight: true,
+      maxLine: 1,
+      text: 'Whitespace ' // trailing tab
+    }
+    component = shallow(<LinesEllipsis {...props} />)
+    const unmountSpy = jest.spyOn(component.instance(), 'componentWillUnmount')
+    component.unmount()
+    expect(unmountSpy).toHaveBeenCalledTimes(1)
+  })
 })
