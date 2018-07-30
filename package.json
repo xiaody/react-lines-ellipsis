@@ -60,12 +60,10 @@
       "docs/*.bundle.js"
     ]
   },
-
   "jest": {
     "testURL": "http://localhost/",
     "setupTestFrameworkScriptFile": "<rootDir>/tests/setupFiles/setupTests.js"
   },
-
   "browserify": {
     "docs": [
       "babelify",

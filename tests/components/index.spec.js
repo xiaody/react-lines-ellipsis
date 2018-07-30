@@ -2,9 +2,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import LinesEllipsis from '../../src/index'
+import LinesEllipsis from '../../src/'
 
-describe('Test main functions of index.js', () => {
+describe('Test internal functions of index.js', () => {
   let component
   let instance
   beforeEach(() => {
@@ -49,29 +49,27 @@ describe('Test main functions of index.js', () => {
     expect(reflow).toHaveBeenCalled()
     expect(inits).toHaveBeenCalled()
   })
-
-  it('trims trailing whitespace', () => {
-    const props = {
+})
+describe('component functionality tests', () => {
+  let props
+  let component
+  beforeEach(() => {
+    props = {
       ellipsis: 'dotdotdot',
       trimRight: true,
       maxLine: 1,
       text: 'Whitespace ' // trailing tab
     }
-
     component = shallow(<LinesEllipsis {...props} />)
+  })
+
+  it('trims trailing whitespace', () => {
     component.instance().componentDidMount()
     const comp = component.find('.LinesEllipsis')
     expect(comp.text).not.toContain(' ') // trailing tab
   })
 
   it('removes canvas div on unmount', () => {
-    const props = {
-      ellipsis: 'dotdotdot',
-      trimRight: true,
-      maxLine: 1,
-      text: 'Whitespace ' // trailing tab
-    }
-    component = shallow(<LinesEllipsis {...props} />)
     const unmountSpy = jest.spyOn(component.instance(), 'componentWillUnmount')
     component.unmount()
     expect(unmountSpy).toHaveBeenCalledTimes(1)
