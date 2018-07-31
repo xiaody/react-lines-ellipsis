@@ -30,7 +30,7 @@ describe('responsiveHOC', () => {
 
   it('fires `onResize` on resize', () => {
     window.innerWidth = 1234
-    window.dispatchEvent(new Event('resize'))
+    window.dispatchEvent(new Event('resize')) // eslint-disable-line no-undef
     expect(responsiveEllipsis.state('winWidth')).toBe(1234)
   })
 })
