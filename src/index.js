@@ -138,7 +138,6 @@ class LinesEllipsis extends React.PureComponent {
     this.canvas.innerHTML = units.map((c, i) => {
       return `<span class='LinesEllipsis-unit'>${c}</span>`
     }).join('') + `<wbr><span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`
-
     const ndEllipsis = this.canvas.lastElementChild
     let ndPrevUnit = prevSibling(ndEllipsis, 2)
     while (ndPrevUnit &&
