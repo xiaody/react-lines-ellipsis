@@ -105,7 +105,7 @@ class LinesEllipsis extends React.PureComponent {
       clamped,
       text: clamped ? this.units.slice(0, ellipsisIndex).join('') : props.text
     }
-    this.setState(newState, props.onReflow && props.onReflow.bind(this, newState))
+    this.setState(newState, props.onReflow.bind(this, newState))
   }
 
   calcIndexes () {

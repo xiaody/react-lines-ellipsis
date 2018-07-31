@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-env jest */
 import React from 'react'
 import { shallow } from 'enzyme'
 
@@ -11,13 +11,13 @@ describe('Test internal functions of index.js', () => {
     jest
       .spyOn(window, 'getComputedStyle')
       .mockImplementation(() => ({display: 'block', 'padding-right': '10px'}))
-    component = shallow(<LinesEllipsis />)
+    component = shallow(<LinesEllipsis onReflow={() => {}} />)
     instance = component.instance()
     instance.reflow({
       text: 'this is a test hello this is a test test test test',
       basedOn: 'words',
       maxLine: 1,
-      onReflow: instance.reflow })
+      onReflow: () => {} })
   })
 
   it('should set styles from target element to canvas', () => {
@@ -26,7 +26,7 @@ describe('Test internal functions of index.js', () => {
   })
 
   it('make sure the text is split into spans given basedOn is words', () => {
-    instance.reflow({ text: 'this is a test', basedOn: 'words', maxLine: 1, onReflow: instance.reflow })
+    instance.reflow({ text: 'this is a test', basedOn: 'words', maxLine: 1, onReflow: () => {} })
     expect(instance.units).toEqual(['this', ' ', 'is', ' ', 'a', ' ', 'test'])
     expect(instance.canvas.innerHTML).toEqual('<span class="LinesEllipsis-unit">this</span><span class="LinesEllipsis' +
       '-unit"> </span><span class="LinesEllipsis-unit">is</span><span class="LinesEllipsis-unit"> </span><span class="' +
@@ -58,6 +58,7 @@ describe('component functionality tests', () => {
       ellipsis: 'dotdotdot',
       trimRight: true,
       maxLine: 1,
+      onReflow: () => {},
       text: 'Whitespace ' // trailing tab
     }
     component = shallow(<LinesEllipsis {...props} />)
