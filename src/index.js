@@ -69,7 +69,7 @@ class LinesEllipsis extends React.PureComponent {
     if (this.canvas) return
     const canvas = this.canvas = document.createElement('div')
     canvas.className = `LinesEllipsis-canvas ${this.props.className}`
-    canvas.setAttribute('aria-hidden', `${this.props.ariaHidden}`);
+    canvas.setAttribute('aria-hidden', `${this.props.ariaHidden}`)
     this.copyStyleToCanvas()
     Object.keys(canvasStyle).forEach((key) => {
       canvas.style[key] = canvasStyle[key]
