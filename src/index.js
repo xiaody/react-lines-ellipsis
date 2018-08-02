@@ -10,14 +10,15 @@ function prevSibling (node, count) {
 }
 
 const defaultProps = {
-  component: 'div',
-  text: '',
-  maxLine: 1,
-  ellipsis: '…', // &hellip;
-  trimRight: true,
-  className: '',
+  ariaHidden: false,
   basedOn: undefined,
+  className: '',
+  component: 'div',
+  ellipsis: '…', // &hellip;
+  maxLine: 1,
   onReflow () {},
+  text: '',
+  trimRight: true,
   winWidth: undefined // for the HOC
 }
 const usedProps = Object.keys(defaultProps)
@@ -68,6 +69,7 @@ class LinesEllipsis extends React.PureComponent {
     if (this.canvas) return
     const canvas = this.canvas = document.createElement('div')
     canvas.className = `LinesEllipsis-canvas ${this.props.className}`
+    canvas.setAttribute('aria-hidden', `${this.props.ariaHidden}`);
     this.copyStyleToCanvas()
     Object.keys(canvasStyle).forEach((key) => {
       canvas.style[key] = canvasStyle[key]
