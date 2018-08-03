@@ -29,7 +29,7 @@ const usedProps = Object.keys(defaultProps)
  * props.basedOn {String} letters|words
  * props.className {String}
  */
-class LinesEllipsis extends React.PureComponent {
+class LinesEllipsis extends React.Component {
   constructor (props) {
     super(props)
     this.state = {

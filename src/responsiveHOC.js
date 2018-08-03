@@ -4,7 +4,7 @@ const isBrowser = typeof window !== 'undefined'
 
 function responsiveHOC (wait = 150, debounceOptions) {
   return Component => {
-    class Responsive extends React.PureComponent {
+    class Responsive extends React.Component {
       constructor (props) {
         super(props)
         this.state = {
