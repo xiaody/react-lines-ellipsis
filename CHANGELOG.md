@@ -1,3 +1,5 @@
+v0.14.0 Drop UNSAFE_componentWillReceiveProps
+
 v0.13.1 Document `props.onReflow()`; HOC: clear listener when unmount. #31
 
 v0.13.0 Add `props.onReflow()`.
