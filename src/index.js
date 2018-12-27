@@ -46,11 +46,13 @@ class LinesEllipsis extends React.Component {
     this.reflow(this.props)
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.winWidth !== this.props.winWidth) {
+  componentDidUpdate (prevProps) {
+    if (prevProps.winWidth !== this.props.winWidth) {
       this.copyStyleToCanvas()
     }
-    this.reflow(nextProps)
+    if (this.props !== prevProps) {
+      this.reflow(this.props)
+    }
   }
 
   componentWillUnmount () {
