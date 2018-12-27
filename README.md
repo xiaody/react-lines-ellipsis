@@ -132,6 +132,7 @@ This is a non-standardized css-based solution for some webkit-based browsers.
 It may have better render performance but also can be fragile.
 Be sure to test your use case if you use it.
 See https://css-tricks.com/line-clampin/#article-header-id-0 for some introduction.
+Also, you may want to star and follow https://crbug.com/305376.
 
 ```jsx
 import LinesEllipsisLoose from 'react-lines-ellipsis/lib/loose'
