@@ -102,7 +102,7 @@ class LinesEllipsis extends React.Component {
     this.canvas.innerHTML = this.units.map((c) => {
       return `<span class='LinesEllipsis-unit'>${c}</span>`
     }).join('')
-    const ellipsisIndex = this.putEllipsis(this.calcIndexes())
+    const ellipsisIndex = this.putEllipsis(this.calcIndexes(basedOn))
     const clamped = ellipsisIndex > -1
     const newState = {
       clamped,
@@ -111,7 +111,7 @@ class LinesEllipsis extends React.Component {
     this.setState(newState, props.onReflow.bind(this, newState))
   }
 
-  calcIndexes () {
+  calcIndexes (basedOn) {
     const indexes = [0]
     let elt = this.canvas.firstElementChild
     if (!elt) return indexes
@@ -119,11 +119,20 @@ class LinesEllipsis extends React.Component {
     let index = 0
     let line = 1
     let offsetTop = elt.offsetTop
+    let canvasWidth = this.canvas.offsetWidth
+    let sumElementsWidth = 0
     while ((elt = elt.nextElementSibling)) {
+      if (elt.offsetTop === offsetTop) {
+        sumElementsWidth += elt.offsetWidth
+      }
       if (elt.offsetTop > offsetTop) {
         line++
         indexes.push(index)
         offsetTop = elt.offsetTop
+        sumElementsWidth = 0
+      } else if (sumElementsWidth > canvasWidth && basedOn === 'letters') {
+        line++
+        indexes.push(index)
       }
       index++
       if (line > this.maxLine) {
