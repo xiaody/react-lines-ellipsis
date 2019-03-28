@@ -21,6 +21,7 @@ module.exports = {
     'text-indent',
     'white-space',
     'word-break',
+    'overflow-wrap',
     'padding-left',
     'padding-right'
   ]
