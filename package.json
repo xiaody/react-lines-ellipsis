@@ -9,8 +9,8 @@
   "scripts": {
     "test": "standard && jest",
     "lint:fix": "standard --fix",
-    "prebuild": "mkdir -p lib",
-    "build": "for js in src/*.js; do babel $js > \"lib/$(basename $js)\"; done",
+    "prebuild": "mkdirp lib",
+    "build": "babel src --out-dir lib",
     "docs": "browserify -e docs/app.js --transform-key=docs | uglifyjs -m -b max_line_len=800,beautify=false > docs/app.bundle.js",
     "docs:watch": "watchify -e docs/app.js --transform-key=docs -o docs/app.bundle.js",
     "prepare": "npm run build"
@@ -77,5 +77,8 @@
     "aliases": {
       "react": "preact"
     }
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.5"
   }
 }
