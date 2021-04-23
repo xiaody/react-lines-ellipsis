@@ -12,7 +12,7 @@ function hookNode (node, basedOn) {
     let units
     switch (basedOn) {
       case 'words':
-        units = node.textContent.split(/\b|(?=\W)/)
+        units = node.textContent.match(/[^\s]+|\s/g)
         break
       case 'letters':
         units = Array.from(node.textContent)
@@ -96,6 +96,7 @@ class HTMLEllipsis extends React.Component {
     this.canvas = null
     this.maxLine = 0
     this.nlUnits = []
+    this.target = React.createRef()
   }
 
   componentDidMount () {
@@ -230,7 +231,7 @@ class HTMLEllipsis extends React.Component {
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
-        ref={node => (this.target = node)}
+        ref={this.target}
         {...omit(rest, usedProps)}
       >
         <div dangerouslySetInnerHTML={{__html: clamped ? html : unsafeHTML}} />

@@ -1,36 +1,59 @@
 const React = require('react')
 const debounce = require('lodash/debounce')
-const isBrowser = typeof window !== 'undefined'
 
 function responsiveHOC (wait = 150, debounceOptions) {
   return Component => {
     class Responsive extends React.Component {
       constructor (props) {
         super(props)
+        const {innerRef} = props
+        this.innerRef = innerRef || React.createRef()
         this.state = {
-          winWidth: isBrowser ? window.innerWidth : 0
+          winWidth: window.innerWidth
         }
-        this.onResize = debounce(this.onResize.bind(this), wait, debounceOptions)
+        this.forceUpdate = this.forceUpdate.bind(this)
+        this.onResize = debounce(this.forceUpdate, wait, debounceOptions)
+        this.resizeObserver = null
       }
 
       componentDidMount () {
-        window.addEventListener('resize', this.onResize)
+        const { current } = this.innerRef
+        const { fonts } = document
+        if (fonts) {
+          fonts.ready.then(this.forceUpdate)
+        } else {
+          setTimeout(this.forceUpdate)
+        }
+        if (window.ResizeObserver && current && current.target) {
+          this.resizeObserver = new ResizeObserver(this.forceUpdate)
+          if (this.resizeObserver) {
+            this.resizeObserver.observe(current.target, { box: 'border-box' })
+          }
+        } else {
+          window.addEventListener('resize', this.onResize)
+        }
       }
 
       componentWillUnmount () {
-        window.removeEventListener('resize', this.onResize)
-        this.onResize.cancel()
+        if (window.ResizeObserver) {
+          if (this.resizeObserver) {
+            this.resizeObserver.disconnect()
+          }
+        } else {
+          window.removeEventListener('resize', this.onResize)
+          this.onResize.cancel()
+        }
       }
 
-      onResize () {
+      forceUpdate() {
         this.setState({
-          winWidth: window.innerWidth
+          winWidth: window.innerWidth + Math.random() / 1000,
         })
       }
 
       render () {
         const {innerRef, ...rest} = this.props
-        return <Component ref={innerRef} {...rest} {...this.state} />
+        return <Component ref={this.innerRef} {...rest} {...this.state} />
       }
     }
 

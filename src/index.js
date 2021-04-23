@@ -39,6 +39,7 @@ class LinesEllipsis extends React.Component {
     this.units = []
     this.maxLine = 0
     this.canvas = null
+    this.target = React.createRef()
   }
 
   componentDidMount () {
@@ -90,7 +91,7 @@ class LinesEllipsis extends React.Component {
     const basedOn = props.basedOn || (/^[\x00-\x7F]+$/.test(props.text) ? 'words' : 'letters')
     switch (basedOn) {
       case 'words':
-        this.units = props.text.split(/\b|(?=\W)/)
+        this.units = props.text.match(/[^\s]+|\s/g)
         break
       case 'letters':
         this.units = Array.from(props.text)
@@ -168,7 +169,7 @@ class LinesEllipsis extends React.Component {
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
-        ref={node => (this.target = node)}
+        ref={this.target}
         {...omit(rest, usedProps)}
       >
         {clamped && trimRight
