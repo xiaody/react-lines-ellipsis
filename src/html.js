@@ -12,7 +12,7 @@ function hookNode (node, basedOn) {
     let units
     switch (basedOn) {
       case 'words':
-        units = node.textContent.match(/[^\s]+|\s/g)
+        units = node.textContent.match(/[^\s]+|\s/g) || []
         break
       case 'letters':
         units = Array.from(node.textContent)
