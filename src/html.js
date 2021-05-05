@@ -75,6 +75,7 @@ const defaultProps = {
   className: '',
   basedOn: undefined,
   onReflow () {},
+  innerRef: undefined,
   winWidth: undefined // for the HOC
 }
 const usedProps = Object.keys(defaultProps)
@@ -89,6 +90,7 @@ const usedProps = Object.keys(defaultProps)
 class HTMLEllipsis extends React.Component {
   constructor (props) {
     super(props)
+    const {innerRef} = props
     this.state = {
       html: props.unsafeHTML,
       clamped: false
@@ -96,7 +98,7 @@ class HTMLEllipsis extends React.Component {
     this.canvas = null
     this.maxLine = 0
     this.nlUnits = []
-    this.target = React.createRef()
+    this.innerRef = innerRef || React.createRef()
   }
 
   componentDidMount () {
@@ -137,7 +139,7 @@ class HTMLEllipsis extends React.Component {
   }
 
   copyStyleToCanvas () {
-    const targetStyle = window.getComputedStyle(this.target.current)
+    const targetStyle = window.getComputedStyle(this.innerRef.current)
     mirrorProps.forEach((key) => {
       this.canvas.style[key] = targetStyle[key]
     })
@@ -231,7 +233,7 @@ class HTMLEllipsis extends React.Component {
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
-        ref={this.target}
+        ref={this.innerRef}
         {...omit(rest, usedProps)}
       >
         <div dangerouslySetInnerHTML={{__html: clamped ? html : unsafeHTML}} />

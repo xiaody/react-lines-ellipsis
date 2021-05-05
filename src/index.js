@@ -3,6 +3,7 @@ const {canvasStyle, mirrorProps} = require('./common')
 const {omit} = require('./helpers')
 const responsiveHOC = require('./responsiveHOC')
 const HTMLEllipsis = require('./html')
+const LinesEllipsisLoose = require('./loose')
 
 function prevSibling (node, count) {
   while (node && count--) {
@@ -20,6 +21,7 @@ const defaultProps = {
   onReflow () {},
   text: '',
   trimRight: true,
+  innerRef: undefined,
   winWidth: undefined // for the HOC
 }
 const usedProps = Object.keys(defaultProps)
@@ -34,6 +36,7 @@ const usedProps = Object.keys(defaultProps)
 class LinesEllipsis extends React.Component {
   constructor (props) {
     super(props)
+    const {innerRef} = props
     this.state = {
       text: props.text,
       clamped: false
@@ -41,7 +44,7 @@ class LinesEllipsis extends React.Component {
     this.units = []
     this.maxLine = 0
     this.canvas = null
-    this.target = React.createRef()
+    this.innerRef = innerRef || React.createRef()
   }
 
   componentDidMount () {
@@ -82,7 +85,7 @@ class LinesEllipsis extends React.Component {
   }
 
   copyStyleToCanvas () {
-    const targetStyle = window.getComputedStyle(this.target.current)
+    const targetStyle = window.getComputedStyle(this.innerRef.current)
     mirrorProps.forEach((key) => {
       this.canvas.style[key] = targetStyle[key]
     })
@@ -171,7 +174,7 @@ class LinesEllipsis extends React.Component {
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
-        ref={this.target}
+        ref={this.innerRef}
         {...omit(rest, usedProps)}
       >
         {clamped && trimRight
@@ -193,3 +196,4 @@ module.exports = LinesEllipsis
 module.exports.LinesEllipsis = LinesEllipsis
 module.exports.HTMLEllipsis = HTMLEllipsis
 module.exports.responsiveHOC = responsiveHOC
+module.exports.LinesEllipsisLoose = LinesEllipsisLoose

@@ -7,10 +7,10 @@ function responsiveHOC (wait = 150, debounceOptions) {
       constructor (props) {
         super(props)
         const {innerRef} = props
-        this.innerRef = innerRef || React.createRef()
         this.state = {
           winWidth: window.innerWidth
         }
+        this.innerRef = innerRef || React.createRef()
         this.forceUpdate = this.forceUpdate.bind(this)
         this.onResize = debounce(this.forceUpdate, wait, debounceOptions)
         this.resizeObserver = null
@@ -24,10 +24,10 @@ function responsiveHOC (wait = 150, debounceOptions) {
         } else {
           setTimeout(this.forceUpdate)
         }
-        if (window.ResizeObserver && current && current.target) {
+        if (window.ResizeObserver && current) {
           this.resizeObserver = new ResizeObserver(this.forceUpdate)
           if (this.resizeObserver) {
-            this.resizeObserver.observe(current.target, { box: 'border-box' })
+            this.resizeObserver.observe(current, { box: 'border-box' })
           }
         } else {
           window.addEventListener('resize', this.onResize)
@@ -53,7 +53,7 @@ function responsiveHOC (wait = 150, debounceOptions) {
 
       render () {
         const {innerRef, ...rest} = this.props
-        return <Component ref={this.innerRef} {...rest} {...this.state} />
+        return <Component innerRef={this.innerRef} {...rest} {...this.state} />
       }
     }
 
@@ -61,7 +61,10 @@ function responsiveHOC (wait = 150, debounceOptions) {
     Responsive.defaultProps = {
       innerRef () {}
     }
-    return Responsive
+
+    return React.forwardRef((props, ref) => (
+      <Responsive innerRef={ref} {...props}/>
+    ))
   }
 }
 
