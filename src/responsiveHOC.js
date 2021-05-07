@@ -45,9 +45,9 @@ function responsiveHOC (wait = 150, debounceOptions) {
         }
       }
 
-      forceUpdate() {
+      forceUpdate () {
         this.setState({
-          winWidth: window.innerWidth + Math.random() / 1000,
+          winWidth: window.innerWidth + Math.random() / 1000
         })
       }
 
@@ -63,7 +63,7 @@ function responsiveHOC (wait = 150, debounceOptions) {
     }
 
     return React.forwardRef((props, ref) => (
-      <Responsive innerRef={ref} {...props}/>
+      <Responsive innerRef={ref} {...props} />
     ))
   }
 }

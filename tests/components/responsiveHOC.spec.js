@@ -11,6 +11,7 @@ describe('responsiveHOC', () => {
   const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis)
   let props
   let responsiveEllipsis
+  let lineEllipsis
 
   beforeEach(() => {
     props = {
@@ -20,6 +21,7 @@ describe('responsiveHOC', () => {
     responsiveEllipsis = mount(
       <ResponsiveEllipsis {...props} />
     )
+    lineEllipsis = responsiveEllipsis.childAt(0).instance()
   })
 
   it('mounted', () => {
@@ -31,6 +33,6 @@ describe('responsiveHOC', () => {
   it('fires `onResize` on resize', () => {
     window.innerWidth = 1234
     window.dispatchEvent(new Event('resize')) // eslint-disable-line no-undef
-    expect(responsiveEllipsis.state('winWidth')).toBe(1234)
+    expect(Math.floor(lineEllipsis.state.winWidth)).toBe(1234)
   })
 })
