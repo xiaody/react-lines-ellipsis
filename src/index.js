@@ -1,6 +1,9 @@
 const React = require('react')
 const {canvasStyle, mirrorProps} = require('./common')
 const {omit} = require('./helpers')
+const responsiveHOC = require('./responsiveHOC')
+const HTMLEllipsis = require('./html')
+const LinesEllipsisLoose = require('./loose')
 
 function prevSibling (node, count) {
   while (node && count--) {
@@ -18,6 +21,7 @@ const defaultProps = {
   onReflow () {},
   text: '',
   trimRight: true,
+  innerRef: undefined,
   winWidth: undefined // for the HOC
 }
 const usedProps = Object.keys(defaultProps)
@@ -32,6 +36,7 @@ const usedProps = Object.keys(defaultProps)
 class LinesEllipsis extends React.Component {
   constructor (props) {
     super(props)
+    const {innerRef} = props
     this.state = {
       text: props.text,
       clamped: false
@@ -39,6 +44,7 @@ class LinesEllipsis extends React.Component {
     this.units = []
     this.maxLine = 0
     this.canvas = null
+    this.innerRef = innerRef || React.createRef()
   }
 
   componentDidMount () {
@@ -79,7 +85,7 @@ class LinesEllipsis extends React.Component {
   }
 
   copyStyleToCanvas () {
-    const targetStyle = window.getComputedStyle(this.target)
+    const targetStyle = window.getComputedStyle(this.innerRef.current)
     mirrorProps.forEach((key) => {
       this.canvas.style[key] = targetStyle[key]
     })
@@ -90,7 +96,7 @@ class LinesEllipsis extends React.Component {
     const basedOn = props.basedOn || (/^[\x00-\x7F]+$/.test(props.text) ? 'words' : 'letters')
     switch (basedOn) {
       case 'words':
-        this.units = props.text.split(/\b|(?=\W)/)
+        this.units = props.text.match(/[^\s]+|\s/g) || []
         break
       case 'letters':
         this.units = Array.from(props.text)
@@ -168,7 +174,7 @@ class LinesEllipsis extends React.Component {
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
-        ref={node => (this.target = node)}
+        ref={this.innerRef}
         {...omit(rest, usedProps)}
       >
         {clamped && trimRight
@@ -187,3 +193,7 @@ class LinesEllipsis extends React.Component {
 LinesEllipsis.defaultProps = defaultProps
 
 module.exports = LinesEllipsis
+module.exports.LinesEllipsis = LinesEllipsis
+module.exports.HTMLEllipsis = HTMLEllipsis
+module.exports.responsiveHOC = responsiveHOC
+module.exports.LinesEllipsisLoose = LinesEllipsisLoose
