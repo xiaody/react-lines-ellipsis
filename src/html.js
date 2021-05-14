@@ -107,7 +107,7 @@ class HTMLEllipsis extends React.Component {
     if (prevProps.winWidth !== this.props.winWidth) {
       this.copyStyleToCanvas()
     }
-    if (this.props !== prevProps) {
+    if (!_.isEqual(this.props, prevProps)) {
       this.reflow(this.props)
     }
   }
