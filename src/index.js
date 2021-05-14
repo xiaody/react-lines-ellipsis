@@ -1,6 +1,7 @@
 const React = require('react')
 const {canvasStyle, mirrorProps} = require('./common')
 const {omit} = require('./helpers')
+const responsiveHOC = require('./responsiveHOC')
 
 function prevSibling (node, count) {
   while (node && count--) {
@@ -187,3 +188,4 @@ class LinesEllipsis extends React.Component {
 LinesEllipsis.defaultProps = defaultProps
 
 module.exports = LinesEllipsis
+module.exports.responsiveHOC = responsiveHOC
