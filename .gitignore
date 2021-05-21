@@ -38,3 +38,6 @@ jspm_packages
 
 # Yarn lock file
 yarn.lock
+
+/lib
+/docs

@@ -1,4 +1,4 @@
-function omit (obj, omittedKeys) {
+export function omit (obj, omittedKeys) {
   if (!obj || typeof obj !== 'object') {
     return obj
   }
@@ -10,8 +10,4 @@ function omit (obj, omittedKeys) {
     ret[key] = obj[key]
   })
   return ret
-}
-
-module.exports = {
-  omit
 }

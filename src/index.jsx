@@ -1,6 +1,6 @@
-const React = require('react')
-const {canvasStyle, mirrorProps} = require('./common')
-const {omit} = require('./helpers')
+import React from 'react'
+import { canvasStyle, mirrorProps } from './common'
+import { omit } from './helpers'
 
 function prevSibling (node, count) {
   while (node && count--) {
@@ -163,8 +163,8 @@ class LinesEllipsis extends React.Component {
   }
 
   render () {
-    const {text, clamped} = this.state
-    const {component: Component, ellipsis, trimRight, className, ...rest} = this.props
+    const { text, clamped } = this.state
+    const { component: Component, ellipsis, trimRight, className, ...rest } = this.props
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
@@ -173,12 +173,10 @@ class LinesEllipsis extends React.Component {
       >
         {clamped && trimRight
           ? text.replace(/[\s\uFEFF\xA0]+$/, '')
-          : text
-        }
+          : text}
         <wbr />
         {clamped &&
-          <span className='LinesEllipsis-ellipsis'>{ellipsis}</span>
-        }
+          <span className='LinesEllipsis-ellipsis'>{ellipsis}</span>}
       </Component>
     )
   }
@@ -186,4 +184,4 @@ class LinesEllipsis extends React.Component {
 
 LinesEllipsis.defaultProps = defaultProps
 
-module.exports = LinesEllipsis
+export default LinesEllipsis
