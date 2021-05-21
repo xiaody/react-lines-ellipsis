@@ -1,4 +1,6 @@
-v0.14.0 Drop UNSAFE_componentWillReceiveProps
+v0.15.0 switch build tool to microbundle
+
+v0.14.0 Drop `UNSAFE_componentWillReceiveProps`
 
 v0.13.1 Document `props.onReflow()`; HOC: clear listener when unmount. #31
 
