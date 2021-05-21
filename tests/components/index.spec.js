@@ -10,14 +10,15 @@ describe('Test internal functions of index.js', () => {
   beforeEach(() => {
     jest
       .spyOn(window, 'getComputedStyle')
-      .mockImplementation(() => ({display: 'block', 'padding-right': '10px'}))
+      .mockImplementation(() => ({ display: 'block', 'padding-right': '10px' }))
     component = shallow(<LinesEllipsis onReflow={() => {}} />)
     instance = component.instance()
     instance.reflow({
       text: 'this is a test hello this is a test test test test',
       basedOn: 'words',
       maxLine: 1,
-      onReflow: () => {} })
+      onReflow: () => {}
+    })
   })
 
   it('should set styles from target element to canvas', () => {

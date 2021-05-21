@@ -1,7 +1,7 @@
-const React = require('react')
+import React from 'react'
 
 function LinesEllipsisLoose (props) {
-  const {component: Component, text, lineHeight, maxLine, style, overflowFallback, ...rest} = props
+  const { component: Component, text, lineHeight, maxLine, style, overflowFallback, ...rest } = props
   const maxLineNumber = +maxLine || 1
   let usedStyle = {
     ...style,
@@ -35,4 +35,4 @@ LinesEllipsisLoose.defaultProps = {
   overflowFallback: true
 }
 
-module.exports = LinesEllipsisLoose
+export default LinesEllipsisLoose

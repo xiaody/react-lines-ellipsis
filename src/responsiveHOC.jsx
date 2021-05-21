@@ -1,8 +1,8 @@
-const React = require('react')
-const debounce = require('lodash/debounce')
+import React from 'react'
+import debounce from 'lodash/debounce'
 const isBrowser = typeof window !== 'undefined'
 
-function responsiveHOC (wait = 150, debounceOptions) {
+export default function responsiveHOC (wait = 150, debounceOptions) {
   return Component => {
     class Responsive extends React.Component {
       constructor (props) {
@@ -29,7 +29,7 @@ function responsiveHOC (wait = 150, debounceOptions) {
       }
 
       render () {
-        const {innerRef, ...rest} = this.props
+        const { innerRef, ...rest } = this.props
         return <Component ref={innerRef} {...rest} {...this.state} />
       }
     }
@@ -41,5 +41,3 @@ function responsiveHOC (wait = 150, debounceOptions) {
     return Responsive
   }
 }
-
-module.exports = responsiveHOC

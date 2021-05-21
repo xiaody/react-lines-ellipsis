@@ -1,6 +1,6 @@
-const React = require('react')
-const {canvasStyle, mirrorProps} = require('./common')
-const {omit} = require('./helpers')
+import React from 'react'
+import { canvasStyle, mirrorProps } from './common'
+import { omit } from './helpers'
 
 function hookNode (node, basedOn) {
   /* eslint-env browser */
@@ -205,7 +205,7 @@ class HTMLEllipsis extends React.Component {
   }
 
   makeEllipsisSpan () {
-    const {ellipsisHTML, ellipsis} = this.props
+    const { ellipsisHTML, ellipsis } = this.props
     const frag = document.createElement('span')
     frag.appendChild(document.createElement('wbr'))
     const ndEllipsis = document.createElement('span')
@@ -225,15 +225,15 @@ class HTMLEllipsis extends React.Component {
   }
 
   render () {
-    const {html, clamped} = this.state
-    const {component: Component, className, unsafeHTML, ...rest} = this.props
+    const { html, clamped } = this.state
+    const { component: Component, className, unsafeHTML, ...rest } = this.props
     return (
       <Component
         className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
         ref={node => (this.target = node)}
         {...omit(rest, usedProps)}
       >
-        <div dangerouslySetInnerHTML={{__html: clamped ? html : unsafeHTML}} />
+        <div dangerouslySetInnerHTML={{ __html: clamped ? html : unsafeHTML }} />
       </Component>
     )
   }
@@ -241,4 +241,4 @@ class HTMLEllipsis extends React.Component {
 
 HTMLEllipsis.defaultProps = defaultProps
 
-module.exports = HTMLEllipsis
+export default HTMLEllipsis

@@ -3,17 +3,18 @@
   "version": "0.14.1",
   "description": "Simple multiline ellipsis component for React.JS",
   "main": "lib/index.js",
+  "module": "lib/index.modern.js",
   "files": [
     "lib"
   ],
   "scripts": {
     "test": "standard && jest",
     "lint:fix": "standard --fix",
-    "prebuild": "mkdir -p lib",
-    "build": "for js in src/*.js; do babel $js > \"lib/$(basename $js)\"; done",
-    "docs": "browserify -e docs/app.js --transform-key=docs | uglifyjs -m -b max_line_len=800,beautify=false > docs/app.bundle.js",
-    "docs:watch": "watchify -e docs/app.js --transform-key=docs -o docs/app.bundle.js",
-    "prepare": "npm run build"
+    "prebuild": "rm -rf lib; mkdir -p lib",
+    "prepare": "npm run build",
+    "build": "microbundle -f modern,cjs --no-compress --no-sourcemap --jsx React.createElement src/*.{js,jsx}",
+    "dev:docs": "snowpack dev",
+    "build:docs": "snowpack build"
   },
   "keywords": [
     "react",
@@ -32,33 +33,26 @@
     "react-dom": "*"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/core": "^7.14.3",
     "@babel/plugin-transform-react-jsx": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
-    "aliasify": "2.1.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babelify": "^10.0.0",
-    "browserify": "^16.2.3",
-    "core-js": "^2.6.5",
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.10",
-    "jest": "^24.1.0",
-    "jest-enzyme": "^7.0.1",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
+    "core-js": "^3.12.1",
+    "enzyme": "^3.11.0",
+    "jest": "^26.6.3",
+    "jest-enzyme": "^7.1.2",
     "lodash": "^4.17.11",
-    "preact": "^8.4.2",
+    "microbundle": "^0.13.0",
     "raf": "^3.4.1",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
-    "standard": "^11.0.1",
-    "uglify-js": "^3.4.9",
-    "watchify": "^3.11.1"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "snowpack": "^3.5.0",
+    "standard": "^16.0.3"
   },
   "standard": {
     "ignore": [
       "lib",
-      "docs/*.bundle.js"
+      "docs"
     ]
   },
   "jest": {
@@ -66,16 +60,5 @@
     "setupFilesAfterEnv": [
       "<rootDir>/tests/setupFiles/setupTests.js"
     ]
-  },
-  "browserify": {
-    "docs": [
-      "babelify",
-      "aliasify"
-    ]
-  },
-  "aliasify": {
-    "aliases": {
-      "react": "preact"
-    }
   }
 }
