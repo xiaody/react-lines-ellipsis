@@ -40,4 +40,5 @@ jspm_packages
 yarn.lock
 
 /lib
-/docs
+# don't ignore in the gh-pages branch
+# /docs
