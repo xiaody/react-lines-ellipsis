@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/xiaody/react-lines-ellipsis.svg?branch=master)](https://travis-ci.org/xiaody/react-lines-ellipsis)
+[![Node.js CI](https://github.com/xiaody/react-lines-ellipsis/actions/workflows/node.js.yml/badge.svg)](https://github.com/xiaody/react-lines-ellipsis/actions/workflows/node.js.yml)
 [![npm version](https://badge.fury.io/js/react-lines-ellipsis.svg)](https://www.npmjs.com/package/react-lines-ellipsis)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://standardjs.com/)
 
