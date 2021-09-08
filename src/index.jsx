@@ -1,4 +1,5 @@
 import React from 'react'
+import ResizeObserver from 'resize-observer-polyfill'
 import { canvasStyle, mirrorProps } from './common'
 import { omit } from './helpers'
 
@@ -39,6 +40,8 @@ class LinesEllipsis extends React.Component {
     this.units = []
     this.maxLine = 0
     this.canvas = null
+    this.target = null
+    this.handleRef = this.handleRef.bind(this)
   }
 
   componentDidMount () {
@@ -59,6 +62,46 @@ class LinesEllipsis extends React.Component {
     this.canvas.parentNode.removeChild(this.canvas)
   }
 
+  handleRef (node) {
+    const isNewNode = this.target !== node
+
+    this.target = node
+    // whenever we obtain a new element, attach resize handler
+    if (node && isNewNode) {
+      this.resizeObserver = this.handleResize(node, this.resizeObserver)
+    }
+  }
+
+  handleResize (el, prevResizeObserver) {
+    // clean up previous observer
+    if (prevResizeObserver) {
+      prevResizeObserver.disconnect()
+    }
+
+    // unmounting or just unsetting the element to be replaced with a new one later
+    if (!el) return null
+
+    /* Wrapper element resize handing */
+    let initialRender = true
+    const resizeCallback = () => {
+      if (initialRender) {
+        // ResizeObserer cb is called on initial render too so we are skipping here
+        initialRender = false
+      } else {
+        // wrapper element has been resized, recalculating with the original text
+        this.copyStyleToCanvas()
+        this.reflow(this.props)
+      }
+    }
+
+    const resizeObserver =
+      prevResizeObserver || new ResizeObserver(resizeCallback)
+
+    resizeObserver.observe(el)
+
+    return resizeObserver
+  }
+
   setState (state, callback) {
     if (typeof state.clamped !== 'undefined') {
       this.clamped = state.clamped
@@ -68,7 +111,7 @@ class LinesEllipsis extends React.Component {
 
   initCanvas () {
     if (this.canvas) return
-    const canvas = this.canvas = document.createElement('div')
+    const canvas = (this.canvas = document.createElement('div'))
     canvas.className = `LinesEllipsis-canvas ${this.props.className}`
     canvas.setAttribute('aria-hidden', 'true')
     this.copyStyleToCanvas()
@@ -87,7 +130,9 @@ class LinesEllipsis extends React.Component {
 
   reflow (props) {
     /* eslint-disable no-control-regex */
-    const basedOn = props.basedOn || (/^[\x00-\x7F]+$/.test(props.text) ? 'words' : 'letters')
+    const basedOn =
+      props.basedOn ||
+      (/^[\x00-\x7F]+$/.test(props.text) ? 'words' : 'letters')
     switch (basedOn) {
       case 'words':
         this.units = props.text.split(/\b|(?=\W)/)
@@ -99,9 +144,11 @@ class LinesEllipsis extends React.Component {
         throw new Error(`Unsupported options basedOn: ${basedOn}`)
     }
     this.maxLine = +props.maxLine || 1
-    this.canvas.innerHTML = this.units.map((c) => {
-      return `<span class='LinesEllipsis-unit'>${c}</span>`
-    }).join('')
+    this.canvas.innerHTML = this.units
+      .map((c) => {
+        return `<span class='LinesEllipsis-unit'>${c}</span>`
+      })
+      .join('')
     const ellipsisIndex = this.putEllipsis(this.calcIndexes())
     const clamped = ellipsisIndex > -1
     const newState = {
@@ -138,17 +185,20 @@ class LinesEllipsis extends React.Component {
     const lastIndex = indexes[this.maxLine]
     const units = this.units.slice(0, lastIndex)
     const maxOffsetTop = this.canvas.children[lastIndex].offsetTop
-    this.canvas.innerHTML = units.map((c, i) => {
-      return `<span class='LinesEllipsis-unit'>${c}</span>`
-    }).join('') + `<wbr><span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`
+    this.canvas.innerHTML =
+      units
+        .map((c, i) => {
+          return `<span class='LinesEllipsis-unit'>${c}</span>`
+        })
+        .join('') +
+      `<wbr><span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`
     const ndEllipsis = this.canvas.lastElementChild
     let ndPrevUnit = prevSibling(ndEllipsis, 2)
-    while (ndPrevUnit &&
-      (
-        ndEllipsis.offsetTop > maxOffsetTop || // IE & Edge: doesn't support <wbr>
+    while (
+      ndPrevUnit &&
+      (ndEllipsis.offsetTop > maxOffsetTop || // IE & Edge: doesn't support <wbr>
         ndEllipsis.offsetHeight > ndPrevUnit.offsetHeight ||
-        ndEllipsis.offsetTop > ndPrevUnit.offsetTop
-      )
+        ndEllipsis.offsetTop > ndPrevUnit.offsetTop)
     ) {
       this.canvas.removeChild(ndPrevUnit)
       ndPrevUnit = prevSibling(ndEllipsis, 2)
@@ -164,19 +214,24 @@ class LinesEllipsis extends React.Component {
 
   render () {
     const { text, clamped } = this.state
-    const { component: Component, ellipsis, trimRight, className, ...rest } = this.props
+    const {
+      component: Component,
+      ellipsis,
+      trimRight,
+      className,
+      ...rest
+    } = this.props
     return (
       <Component
-        className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
-        ref={node => (this.target = node)}
+        className={`LinesEllipsis ${
+          clamped ? 'LinesEllipsis--clamped' : ''
+        } ${className}`}
+        ref={this.handleRef}
         {...omit(rest, usedProps)}
       >
-        {clamped && trimRight
-          ? text.replace(/[\s\uFEFF\xA0]+$/, '')
-          : text}
+        {clamped && trimRight ? text.replace(/[\s\uFEFF\xA0]+$/, '') : text}
         <wbr />
-        {clamped &&
-          <span className='LinesEllipsis-ellipsis'>{ellipsis}</span>}
+        {clamped && <span className='LinesEllipsis-ellipsis'>{ellipsis}</span>}
       </Component>
     )
   }
