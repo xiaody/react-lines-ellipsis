@@ -4,6 +4,7 @@
   "description": "Simple multiline ellipsis component for React.JS",
   "main": "lib/index.js",
   "module": "lib/index.modern.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
@@ -12,7 +13,7 @@
     "lint:fix": "standard --fix",
     "prebuild": "rm -rf lib; mkdir -p lib",
     "prepare": "npm run build",
-    "build": "microbundle -f modern,cjs --no-compress --no-sourcemap --jsx React.createElement src/*.{js,jsx}",
+    "build": "microbundle -f modern,cjs --no-compress --no-sourcemap --jsx React.createElement src/*.{js,jsx,ts}",
     "dev:docs": "snowpack dev",
     "build:docs": "snowpack build"
   },
@@ -36,6 +37,7 @@
     "@babel/core": "^7.14.3",
     "@babel/plugin-transform-react-jsx": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "@types/react": "^17.0.20",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "core-js": "^3.12.1",
     "enzyme": "^3.11.0",
@@ -48,7 +50,8 @@
     "react-dom": "^17.0.2",
     "resize-observer-polyfill": "^1.5.1",
     "snowpack": "^3.5.0",
-    "standard": "^16.0.3"
+    "standard": "^16.0.3",
+    "typescript": "^4.4.2"
   },
   "standard": {
     "ignore": [
