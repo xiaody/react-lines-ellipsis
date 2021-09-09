@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import { canvasStyle, mirrorProps } from './common'
 import { omit } from './helpers'
 
@@ -39,10 +40,7 @@ function dummySpan (text) {
 }
 
 function unwrapTextNode (node) {
-  node.parentNode.replaceChild(
-    document.createTextNode(node.textContent),
-    node
-  )
+  node.parentNode.replaceChild(document.createTextNode(node.textContent), node)
 }
 
 function removeFollowingElementLeaves (node, root) {
@@ -56,14 +54,19 @@ function removeFollowingElementLeaves (node, root) {
 function findBlockAncestor (node) {
   let ndAncestor = node
   while ((ndAncestor = ndAncestor.parentNode)) {
-    if (/p|div|main|section|h\d|ul|ol|li/.test(ndAncestor.tagName.toLowerCase())) {
+    if (
+      /p|div|main|section|h\d|ul|ol|li/.test(ndAncestor.tagName.toLowerCase())
+    ) {
       return ndAncestor
     }
   }
 }
 
 function affectLayout (ndUnit) {
-  return !!(ndUnit.offsetHeight && (ndUnit.offsetWidth || /\S/.test(ndUnit.textContent)))
+  return !!(
+    ndUnit.offsetHeight &&
+    (ndUnit.offsetWidth || /\S/.test(ndUnit.textContent))
+  )
 }
 
 const defaultProps = {
@@ -107,7 +110,7 @@ class HTMLEllipsis extends React.Component {
     if (prevProps.winWidth !== this.props.winWidth) {
       this.copyStyleToCanvas()
     }
-    if (this.props !== prevProps) {
+    if (!_.isEqual(this.props, prevProps)) {
       this.reflow(this.props)
     }
   }
@@ -125,7 +128,7 @@ class HTMLEllipsis extends React.Component {
 
   initCanvas () {
     if (this.canvas) return
-    const canvas = this.canvas = document.createElement('div')
+    const canvas = (this.canvas = document.createElement('div'))
     canvas.className = `LinesEllipsis-canvas ${this.props.className}`
     canvas.setAttribute('aria-hidden', 'true')
     this.copyStyleToCanvas()
@@ -146,7 +149,9 @@ class HTMLEllipsis extends React.Component {
     /* eslint-disable no-control-regex */
     this.maxLine = +props.maxLine || 1
     this.canvas.innerHTML = props.unsafeHTML
-    const basedOn = props.basedOn || (/^[\x00-\x7F]+$/.test(props.unsafeHTML) ? 'words' : 'letters')
+    const basedOn =
+      props.basedOn ||
+      (/^[\x00-\x7F]+$/.test(props.unsafeHTML) ? 'words' : 'letters')
     hookNode(this.canvas, basedOn)
     const clamped = this.putEllipsis(this.calcIndexes())
     const newState = {
@@ -158,7 +163,9 @@ class HTMLEllipsis extends React.Component {
 
   calcIndexes () {
     const indexes = [0]
-    const nlUnits = this.nlUnits = Array.from(this.canvas.querySelectorAll('.LinesEllipsis-unit'))
+    const nlUnits = (this.nlUnits = Array.from(
+      this.canvas.querySelectorAll('.LinesEllipsis-unit')
+    ))
     const len = nlUnits.length
     if (!nlUnits.length) return indexes
 
@@ -190,10 +197,11 @@ class HTMLEllipsis extends React.Component {
       removeFollowingElementLeaves(ndPrevUnit, this.canvas)
       findBlockAncestor(ndPrevUnit).appendChild(ndEllipsis)
       ndPrevUnit = this.nlUnits.pop()
-    } while (ndPrevUnit && (
-      !affectLayout(ndPrevUnit) ||
-      ndEllipsis.offsetHeight > ndPrevUnit.offsetHeight ||
-      ndEllipsis.offsetTop > ndPrevUnit.offsetTop)
+    } while (
+      ndPrevUnit &&
+      (!affectLayout(ndPrevUnit) ||
+        ndEllipsis.offsetHeight > ndPrevUnit.offsetHeight ||
+        ndEllipsis.offsetTop > ndPrevUnit.offsetTop)
     )
 
     if (ndPrevUnit) {
@@ -229,11 +237,15 @@ class HTMLEllipsis extends React.Component {
     const { component: Component, className, unsafeHTML, ...rest } = this.props
     return (
       <Component
-        className={`LinesEllipsis ${clamped ? 'LinesEllipsis--clamped' : ''} ${className}`}
-        ref={node => (this.target = node)}
+        className={`LinesEllipsis ${
+          clamped ? 'LinesEllipsis--clamped' : ''
+        } ${className}`}
+        ref={(node) => (this.target = node)}
         {...omit(rest, usedProps)}
       >
-        <div dangerouslySetInnerHTML={{ __html: clamped ? html : unsafeHTML }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: clamped ? html : unsafeHTML }}
+        />
       </Component>
     )
   }
