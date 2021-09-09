@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import ResizeObserver from 'resize-observer-polyfill'
 import { canvasStyle, mirrorProps } from './common'
 import { omit } from './helpers'
@@ -53,13 +54,15 @@ class LinesEllipsis extends React.Component {
     if (prevProps.winWidth !== this.props.winWidth) {
       this.copyStyleToCanvas()
     }
-    if (this.props !== prevProps) {
+    if (!_.isEqual(this.props, prevProps)) {
       this.reflow(this.props)
     }
   }
 
   componentWillUnmount () {
-    this.resizeObserver.disconnect()
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect()
+    }
     this.canvas.parentNode.removeChild(this.canvas)
   }
 
