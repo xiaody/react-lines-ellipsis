@@ -59,6 +59,7 @@ class LinesEllipsis extends React.Component {
   }
 
   componentWillUnmount () {
+    this.resizeObserver.disconnect()
     this.canvas.parentNode.removeChild(this.canvas)
   }
 
