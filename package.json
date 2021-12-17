@@ -33,21 +33,21 @@
     "react-dom": "*"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/plugin-transform-react-jsx": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
-    "core-js": "^3.12.1",
+    "@babel/core": "^7.16.5",
+    "@babel/plugin-transform-react-jsx": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "core-js": "^3.20.0",
     "enzyme": "^3.11.0",
     "jest": "^26.6.3",
     "jest-enzyme": "^7.1.2",
     "lodash": "^4.17.11",
-    "microbundle": "^0.13.0",
+    "microbundle": "^0.13.3",
     "raf": "^3.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "snowpack": "^3.5.0",
-    "standard": "^16.0.3"
+    "snowpack": "^3.8.8",
+    "standard": "^16.0.4"
   },
   "standard": {
     "ignore": [
