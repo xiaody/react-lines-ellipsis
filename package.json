@@ -8,7 +8,7 @@
     "lib"
   ],
   "scripts": {
-    "test": "standard && jest",
+    "test": "standard",
     "lint:fix": "standard --fix",
     "prebuild": "rm -rf lib; mkdir -p lib",
     "prepare": "npm run build",
@@ -33,19 +33,18 @@
     "react-dom": "*"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.5",
-    "@babel/plugin-transform-react-jsx": "^7.16.5",
-    "@babel/preset-env": "^7.16.5",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
-    "core-js": "^3.20.0",
+    "@babel/core": "^7.18.5",
+    "@babel/plugin-transform-react-jsx": "^7.17.12",
+    "@babel/preset-env": "^7.18.2",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
+    "core-js": "^3.23.0",
     "enzyme": "^3.11.0",
-    "jest": "^26.6.3",
-    "jest-enzyme": "^7.1.2",
     "lodash": "^4.17.11",
-    "microbundle": "^0.13.3",
+    "microbundle": "^0.15.0",
     "raf": "^3.4.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "snowpack": "^3.8.8",
     "standard": "^16.0.4"
   },
@@ -55,10 +54,8 @@
       "docs"
     ]
   },
-  "jest": {
-    "testURL": "http://localhost/",
-    "setupFilesAfterEnv": [
-      "<rootDir>/tests/setupFiles/setupTests.js"
-    ]
+  "engines": {
+    "node": ">=16",
+    "npm": ">=8"
   }
 }
