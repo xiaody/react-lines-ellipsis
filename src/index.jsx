@@ -57,6 +57,7 @@ class LinesEllipsis extends React.Component {
 
   componentWillUnmount () {
     this.canvas.parentNode.removeChild(this.canvas)
+    this.canvas = null
   }
 
   setState (state, callback) {

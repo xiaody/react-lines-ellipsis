@@ -4,7 +4,7 @@ import 'core-js/es/array/find' // IE
 import 'raf/polyfill' // IE 9
 
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import _LinesEllipsis from '../src/index'
 import _HTMLEllipsis from '../src/html'
 import responsiveHOC from '../src/responsiveHOC'
@@ -139,5 +139,9 @@ class App extends React.Component {
 }
 
 window.requestAnimationFrame(function bootstrap () {
-  ReactDOM.render(<App />, document.getElementById('react-root'))
+  createRoot(document.getElementById('react-root')).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  )
 })
