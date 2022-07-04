@@ -3,7 +3,7 @@
   "version": "0.15.1",
   "description": "Simple multiline ellipsis component for React.JS",
   "main": "lib/index.js",
-  "module": "lib/index.modern.js",
+  "module": "lib/index.modern.mjs",
   "files": [
     "lib"
   ],
