@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "module": "es2020",
+    "moduleResolution": "node",
+    "target": "es2019",
+    "strict": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": false,
+    "declaration": true,
+    "esModuleInterop": true,
+    "jsx": "react"
+  }
+}

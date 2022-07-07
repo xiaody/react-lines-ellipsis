@@ -8,13 +8,13 @@
     "lib"
   ],
   "scripts": {
-    "test": "standard",
-    "lint:fix": "standard --fix",
+    "test": "prettier --check src docs-src",
+    "lint": "prettier --write src docs-src",
     "prebuild": "rm -rf lib; mkdir -p lib",
     "prepare": "npm run build",
-    "build": "microbundle -f modern,cjs --no-compress --no-sourcemap --jsx React.createElement src/*.{js,jsx}",
-    "dev:docs": "snowpack dev",
-    "build:docs": "snowpack build"
+    "build": "microbundle -f modern,cjs --no-compress --no-sourcemap --jsx React.createElement src/*.{ts,tsx}",
+    "dev:docs": "vite",
+    "build:docs": "vite build"
   },
   "keywords": [
     "react",
@@ -38,24 +38,18 @@
     "@babel/preset-env": "^7.18.2",
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
-    "core-js": "^3.23.0",
-    "enzyme": "^3.11.0",
-    "lodash": "^4.17.11",
+    "lodash-es": "^4.17.21",
     "microbundle": "^0.15.0",
-    "raf": "^3.4.1",
+    "prettier": "^2.7.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "snowpack": "^3.8.8",
-    "standard": "^16.0.4"
-  },
-  "standard": {
-    "ignore": [
-      "lib",
-      "docs"
-    ]
+    "vite": "^2.9.13"
   },
   "engines": {
     "node": ">=16",
     "npm": ">=8"
+  },
+  "dependencies": {
+    "@types/lodash-es": "^4.17"
   }
 }

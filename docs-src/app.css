@@ -9,7 +9,6 @@
 
   /* https://stackoverflow.com/q/2710764/1035475 */
   -webkit-text-size-adjust: 100%;
-
 }
 
 body {
@@ -39,7 +38,7 @@ h1,
 .badges li {
   display: inline-flex;
   margin-right: 0.8em;
-  margin-bottom: .2em;
+  margin-bottom: 0.2em;
 }
 
 .badges a {
@@ -106,7 +105,7 @@ h1,
   width: 100%;
   min-height: 300px;
   margin-top: 24px;
-  padding: .4em .5em;
+  padding: 0.4em 0.5em;
   border: 1px solid #e7e7e7;
   border-radius: 3px;
   font-size: 14px;
