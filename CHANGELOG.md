@@ -1,3 +1,5 @@
+v0.15.2 fix a wrong path in package.json
+
 v0.15.1 support react 18 strict mode. #103
 
 v0.15.0 switch build tool to microbundle
