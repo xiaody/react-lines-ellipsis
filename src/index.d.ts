@@ -18,11 +18,11 @@ declare module "react-lines-ellipsis"{
     clamped: boolean
   }
   
-  export default class LinesEllipsis<T extends StrComponent = 'div'> extends React.Component<
+  export default class LinesEllipsis<T extends StrComponent = "div"> extends React.Component<
     LinesEllipsisPropsExtendedProps<T>,
     LinesEllipsisState,
     unknown
   >{
-    static defaultProps: LinesEllipsisProps<'div'>;
+    static defaultProps: LinesEllipsisProps<"div">;
   }
 }
