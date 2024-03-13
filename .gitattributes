@@ -1,3 +1,4 @@
 lib/** -diff
 docs/** -diff
 /package-lock.json -diff
+* text eol=lf
