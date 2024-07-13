@@ -1,7 +1,14 @@
 import React from 'react'
 
-function LinesEllipsisLoose (props) {
-  const { component: Component, text, lineHeight, maxLine, style, overflowFallback, ...rest } = props
+function LinesEllipsisLoose ({
+  component: Component = 'div',
+  text,
+  lineHeight,
+  maxLine = 1,
+  style = {},
+  overflowFallback = true,
+  ...rest
+}) {
   const maxLineNumber = +maxLine || 1
   let usedStyle = {
     ...style,
@@ -26,13 +33,6 @@ function LinesEllipsisLoose (props) {
       {text}
     </Component>
   )
-}
-
-LinesEllipsisLoose.defaultProps = {
-  component: 'div',
-  maxLine: 1,
-  style: {},
-  overflowFallback: true
 }
 
 export default LinesEllipsisLoose
