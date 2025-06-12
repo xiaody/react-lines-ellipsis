@@ -5,58 +5,30 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-
-    return target;
-  };
-  return _extends.apply(this, arguments);
+    return n;
+  }, _extends.apply(null, arguments);
 }
-
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-
-  _setPrototypeOf(subClass, superClass);
+function _inheritsLoose(t, o) {
+  t.prototype = Object.create(o.prototype), t.prototype.constructor = t, _setPrototypeOf(t, o);
 }
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-  return _setPrototypeOf(o, p);
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (-1 !== e.indexOf(n)) continue;
+    t[n] = r[n];
   }
-
-  return target;
+  return t;
 }
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
+function _setPrototypeOf(t, e) {
+  return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) {
+    return t.__proto__ = e, t;
+  }, _setPrototypeOf(t, e);
 }
 
 /**
@@ -573,60 +545,50 @@ var debounce_1 = debounce;
 
 var _excluded = ["innerRef"];
 var isBrowser = typeof window !== 'undefined';
+var defaultProps = {
+  innerRef: function innerRef() {}
+};
 function responsiveHOC(wait, debounceOptions) {
   if (wait === void 0) {
     wait = 150;
   }
-
   return function (Component) {
     var Responsive = /*#__PURE__*/function (_React$Component) {
-      _inheritsLoose(Responsive, _React$Component);
-
       function Responsive(props) {
         var _this;
-
         _this = _React$Component.call(this, props) || this;
+        _this.props = _extends({}, defaultProps, props);
         _this.state = {
           winWidth: isBrowser ? window.innerWidth : 0
         };
-        _this.onResize = debounce_1(_this.onResize.bind(_assertThisInitialized(_this)), wait, debounceOptions);
+        _this.onResize = debounce_1(_this.onResize.bind(_this), wait, debounceOptions);
         return _this;
       }
-
+      _inheritsLoose(Responsive, _React$Component);
       var _proto = Responsive.prototype;
-
       _proto.componentDidMount = function componentDidMount() {
         window.addEventListener('resize', this.onResize);
       };
-
       _proto.componentWillUnmount = function componentWillUnmount() {
         window.removeEventListener('resize', this.onResize);
         this.onResize.cancel();
       };
-
       _proto.onResize = function onResize() {
         this.setState({
           winWidth: window.innerWidth
         });
       };
-
       _proto.render = function render() {
         var _this$props = this.props,
-            innerRef = _this$props.innerRef,
-            rest = _objectWithoutPropertiesLoose(_this$props, _excluded);
-
+          innerRef = _this$props.innerRef,
+          rest = _objectWithoutPropertiesLoose(_this$props, _excluded);
         return /*#__PURE__*/React__default["default"].createElement(Component, _extends({
           ref: innerRef
         }, rest, this.state));
       };
-
       return Responsive;
     }(React__default["default"].Component);
-
     Responsive.displayName = "Responsive(" + (Component.displayName || Component.name) + ")";
-    Responsive.defaultProps = {
-      innerRef: function innerRef() {}
-    };
     return Responsive;
   };
 }

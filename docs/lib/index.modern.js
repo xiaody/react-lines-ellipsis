@@ -1,31 +1,25 @@
 import React from "../_snowpack/pkg/react.js";
 function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends = Object.assign ? Object.assign.bind() : function(n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t)
+        ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-    return target;
-  };
-  return _extends.apply(this, arguments);
+    return n;
+  }, _extends.apply(null, arguments);
 }
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null)
+function _objectWithoutPropertiesLoose(r, e) {
+  if (r == null)
     return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0)
-      continue;
-    target[key] = source[key];
-  }
-  return target;
+  var t = {};
+  for (var n in r)
+    if ({}.hasOwnProperty.call(r, n)) {
+      if (e.indexOf(n) !== -1)
+        continue;
+      t[n] = r[n];
+    }
+  return t;
 }
 const canvasStyle = {
   position: "absolute",
@@ -71,9 +65,10 @@ const defaultProps = {
   winWidth: void 0
 };
 const usedProps = Object.keys(defaultProps);
-class LinesEllipsis extends React.Component {
+class LinesEllipsis extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.props = _extends({}, defaultProps, props);
     this.state = {
       text: props.text,
       clamped: false
@@ -95,8 +90,10 @@ class LinesEllipsis extends React.Component {
     }
   }
   componentWillUnmount() {
-    this.canvas.parentNode.removeChild(this.canvas);
-    this.canvas = null;
+    if (this.canvas) {
+      this.canvas.parentNode.removeChild(this.canvas);
+      this.canvas = null;
+    }
   }
   setState(state, callback) {
     if (typeof state.clamped !== "undefined") {
@@ -173,7 +170,7 @@ class LinesEllipsis extends React.Component {
     const lastIndex = indexes[this.maxLine];
     const units = this.units.slice(0, lastIndex);
     const maxOffsetTop = this.canvas.children[lastIndex].offsetTop;
-    this.canvas.innerHTML = units.map((c, i) => {
+    this.canvas.innerHTML = units.map((c, _i) => {
       return `<span class='LinesEllipsis-unit'>${c}</span>`;
     }).join("") + `<wbr><span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`;
     const ndEllipsis = this.canvas.lastElementChild;
@@ -207,5 +204,4 @@ class LinesEllipsis extends React.Component {
     }, ellipsis));
   }
 }
-LinesEllipsis.defaultProps = defaultProps;
 export {LinesEllipsis as default};

@@ -1,31 +1,25 @@
 import React from "../_snowpack/pkg/react.js";
 function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends = Object.assign ? Object.assign.bind() : function(n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t)
+        ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-    return target;
-  };
-  return _extends.apply(this, arguments);
+    return n;
+  }, _extends.apply(null, arguments);
 }
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null)
+function _objectWithoutPropertiesLoose(r, e) {
+  if (r == null)
     return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0)
-      continue;
-    target[key] = source[key];
-  }
-  return target;
+  var t = {};
+  for (var n in r)
+    if ({}.hasOwnProperty.call(r, n)) {
+      if (e.indexOf(n) !== -1)
+        continue;
+      t[n] = r[n];
+    }
+  return t;
 }
 const canvasStyle = {
   position: "absolute",
@@ -120,9 +114,10 @@ const defaultProps = {
   winWidth: void 0
 };
 const usedProps = Object.keys(defaultProps);
-class HTMLEllipsis extends React.Component {
+class HTMLEllipsis extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.props = _extends({}, defaultProps, props);
     this.state = {
       html: props.unsafeHTML,
       clamped: false
@@ -263,5 +258,4 @@ class HTMLEllipsis extends React.Component {
     }));
   }
 }
-HTMLEllipsis.defaultProps = defaultProps;
 export {HTMLEllipsis as default};
