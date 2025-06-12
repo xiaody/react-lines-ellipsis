@@ -86,7 +86,7 @@ const usedProps = Object.keys(defaultProps)
  * props.basedOn {String} letters|words
  * props.className {String}
  */
-class HTMLEllipsis extends React.Component {
+class HTMLEllipsis extends React.PureComponent {
   constructor (props) {
     super(props)
     this.props = { ...defaultProps, ...props }

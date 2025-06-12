@@ -29,7 +29,7 @@ const usedProps = Object.keys(defaultProps)
  * props.basedOn {String} letters|words
  * props.className {String}
  */
-class LinesEllipsis extends React.Component {
+class LinesEllipsis extends React.PureComponent {
   constructor (props) {
     super(props)
     this.props = { ...defaultProps, ...props }
@@ -142,7 +142,7 @@ class LinesEllipsis extends React.Component {
     const lastIndex = indexes[this.maxLine]
     const units = this.units.slice(0, lastIndex)
     const maxOffsetTop = this.canvas.children[lastIndex].offsetTop
-    this.canvas.innerHTML = units.map((c, i) => {
+    this.canvas.innerHTML = units.map((c, _i) => {
       return `<span class='LinesEllipsis-unit'>${c}</span>`
     }).join('') + `<wbr><span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`
     const ndEllipsis = this.canvas.lastElementChild
