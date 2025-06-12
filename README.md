@@ -142,3 +142,17 @@ import LinesEllipsisLoose from 'react-lines-ellipsis/lib/loose'
   lineHeight='16'
 />
 ```
+
+## Common issues
+
+### I want 3 lines but the component **sometimes** gives me 4 lines.
+
+Chances are your text rendering is unstable. Like you are using a web font whose chars are fatter, or the container width is set dynamically, or some words in the text are set dynamically, etc.
+   
+### The component cuts too much / cuts nothing.
+
+Check your CSS about [`word-break`](https://github.com/xiaody/react-lines-ellipsis/issues/128) [`white-space`](https://github.com/xiaody/react-lines-ellipsis/issues/59#issuecomment-528683491), etc.
+
+### I have other issues
+
+Please fill a issue with a [stackblitz reproduction](https://stackblitz.com/edit/react-lines-ellipsis-2fjoj4?file=src%2FApp.js) link.

@@ -2,11 +2,16 @@ import React from 'react'
 import debounce from 'lodash/debounce'
 const isBrowser = typeof window !== 'undefined'
 
+const defaultProps = {
+  innerRef: () => {}
+}
+
 export default function responsiveHOC (wait = 150, debounceOptions) {
   return Component => {
     class Responsive extends React.Component {
       constructor (props) {
         super(props)
+        this.props = { ...defaultProps, ...props }
         this.state = {
           winWidth: isBrowser ? window.innerWidth : 0
         }
@@ -35,9 +40,7 @@ export default function responsiveHOC (wait = 150, debounceOptions) {
     }
 
     Responsive.displayName = `Responsive(${Component.displayName || Component.name})`
-    Responsive.defaultProps = {
-      innerRef () {}
-    }
+
     return Responsive
   }
 }

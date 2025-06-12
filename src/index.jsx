@@ -29,9 +29,10 @@ const usedProps = Object.keys(defaultProps)
  * props.basedOn {String} letters|words
  * props.className {String}
  */
-class LinesEllipsis extends React.Component {
+class LinesEllipsis extends React.PureComponent {
   constructor (props) {
     super(props)
+    this.props = { ...defaultProps, ...props }
     this.state = {
       text: props.text,
       clamped: false
@@ -56,8 +57,10 @@ class LinesEllipsis extends React.Component {
   }
 
   componentWillUnmount () {
-    this.canvas.parentNode.removeChild(this.canvas)
-    this.canvas = null
+    if (this.canvas) {
+      this.canvas.parentNode.removeChild(this.canvas)
+      this.canvas = null
+    }
   }
 
   setState (state, callback) {
@@ -139,7 +142,7 @@ class LinesEllipsis extends React.Component {
     const lastIndex = indexes[this.maxLine]
     const units = this.units.slice(0, lastIndex)
     const maxOffsetTop = this.canvas.children[lastIndex].offsetTop
-    this.canvas.innerHTML = units.map((c, i) => {
+    this.canvas.innerHTML = units.map((c, _i) => {
       return `<span class='LinesEllipsis-unit'>${c}</span>`
     }).join('') + `<wbr><span class='LinesEllipsis-ellipsis'>${this.props.ellipsis}</span>`
     const ndEllipsis = this.canvas.lastElementChild
@@ -182,7 +185,5 @@ class LinesEllipsis extends React.Component {
     )
   }
 }
-
-LinesEllipsis.defaultProps = defaultProps
 
 export default LinesEllipsis

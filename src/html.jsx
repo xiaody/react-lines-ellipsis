@@ -86,9 +86,10 @@ const usedProps = Object.keys(defaultProps)
  * props.basedOn {String} letters|words
  * props.className {String}
  */
-class HTMLEllipsis extends React.Component {
+class HTMLEllipsis extends React.PureComponent {
   constructor (props) {
     super(props)
+    this.props = { ...defaultProps, ...props }
     this.state = {
       html: props.unsafeHTML,
       clamped: false
@@ -239,7 +240,5 @@ class HTMLEllipsis extends React.Component {
     )
   }
 }
-
-HTMLEllipsis.defaultProps = defaultProps
 
 export default HTMLEllipsis
