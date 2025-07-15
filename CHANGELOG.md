@@ -1,3 +1,5 @@
+v0.16.0 be compatible with React 19 #139
+
 v0.15.3 remove engines field in package.json #108
 
 v0.15.2 fix a wrong path in package.json
