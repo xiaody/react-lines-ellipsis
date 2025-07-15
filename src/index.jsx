@@ -32,7 +32,6 @@ const usedProps = Object.keys(defaultProps)
 class LinesEllipsis extends React.PureComponent {
   constructor (props) {
     super(props)
-    this.props = { ...defaultProps, ...props }
     this.state = {
       text: props.text,
       clamped: false
@@ -185,5 +184,7 @@ class LinesEllipsis extends React.PureComponent {
     )
   }
 }
+
+LinesEllipsis.defaultProps = defaultProps
 
 export default LinesEllipsis
