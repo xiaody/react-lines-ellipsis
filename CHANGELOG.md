@@ -1,3 +1,5 @@
+v0.16.1 fix wrong alternative of defaultProps #140
+
 v0.16.0 be compatible with React 19 #139
 
 v0.15.3 remove engines field in package.json #108
