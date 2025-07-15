@@ -139,7 +139,7 @@ class App extends React.Component {
 }
 
 window.requestAnimationFrame(function bootstrap () {
-  console.debug(`React version ${React.version}`);
+  console.debug(`React version ${React.version}`)
   createRoot(document.getElementById('react-root')).render(
     <React.StrictMode>
       <App />
