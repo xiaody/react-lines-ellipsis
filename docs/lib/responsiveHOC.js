@@ -145,20 +145,20 @@ var Symbol = _root.Symbol;
 var _Symbol = Symbol;
 
 /** Used for built-in method references. */
-var objectProto$1 = Object.prototype;
+var objectProto = Object.prototype;
 
 /** Used to check objects for own properties. */
-var hasOwnProperty = objectProto$1.hasOwnProperty;
+var hasOwnProperty = objectProto.hasOwnProperty;
 
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
-var nativeObjectToString$1 = objectProto$1.toString;
+var nativeObjectToString = objectProto.toString;
 
 /** Built-in value references. */
-var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
+var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
 
 /**
  * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
@@ -168,20 +168,20 @@ var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
  * @returns {string} Returns the raw `toStringTag`.
  */
 function getRawTag(value) {
-  var isOwn = hasOwnProperty.call(value, symToStringTag$1),
-      tag = value[symToStringTag$1];
+  var isOwn = hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
 
   try {
-    value[symToStringTag$1] = undefined;
+    value[symToStringTag] = undefined;
     var unmasked = true;
   } catch (e) {}
 
-  var result = nativeObjectToString$1.call(value);
+  var result = nativeObjectToString.call(value);
   if (unmasked) {
     if (isOwn) {
-      value[symToStringTag$1] = tag;
+      value[symToStringTag] = tag;
     } else {
-      delete value[symToStringTag$1];
+      delete value[symToStringTag];
     }
   }
   return result;
@@ -190,14 +190,14 @@ function getRawTag(value) {
 var _getRawTag = getRawTag;
 
 /** Used for built-in method references. */
-var objectProto = Object.prototype;
+var objectProto$1 = Object.prototype;
 
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
-var nativeObjectToString = objectProto.toString;
+var nativeObjectToString$1 = objectProto$1.toString;
 
 /**
  * Converts `value` to a string using `Object.prototype.toString`.
@@ -207,7 +207,7 @@ var nativeObjectToString = objectProto.toString;
  * @returns {string} Returns the converted string.
  */
 function objectToString(value) {
-  return nativeObjectToString.call(value);
+  return nativeObjectToString$1.call(value);
 }
 
 var _objectToString = objectToString;
@@ -217,7 +217,7 @@ var nullTag = '[object Null]',
     undefinedTag = '[object Undefined]';
 
 /** Built-in value references. */
-var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
+var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
 
 /**
  * The base implementation of `getTag` without fallbacks for buggy environments.
@@ -230,7 +230,7 @@ function baseGetTag(value) {
   if (value == null) {
     return value === undefined ? undefinedTag : nullTag;
   }
-  return (symToStringTag && symToStringTag in Object(value))
+  return (symToStringTag$1 && symToStringTag$1 in Object(value))
     ? _getRawTag(value)
     : _objectToString(value);
 }
@@ -545,9 +545,6 @@ var debounce_1 = debounce;
 
 var _excluded = ["innerRef"];
 var isBrowser = typeof window !== 'undefined';
-var defaultProps = {
-  innerRef: function innerRef() {}
-};
 function responsiveHOC(wait, debounceOptions) {
   if (wait === void 0) {
     wait = 150;
@@ -557,7 +554,6 @@ function responsiveHOC(wait, debounceOptions) {
       function Responsive(props) {
         var _this;
         _this = _React$Component.call(this, props) || this;
-        _this.props = _extends({}, defaultProps, props);
         _this.state = {
           winWidth: isBrowser ? window.innerWidth : 0
         };
@@ -582,13 +578,16 @@ function responsiveHOC(wait, debounceOptions) {
         var _this$props = this.props,
           innerRef = _this$props.innerRef,
           rest = _objectWithoutPropertiesLoose(_this$props, _excluded);
-        return /*#__PURE__*/React__default["default"].createElement(Component, _extends({
+        return /*#__PURE__*/React__default['default'].createElement(Component, _extends({
           ref: innerRef
         }, rest, this.state));
       };
       return Responsive;
-    }(React__default["default"].Component);
+    }(React__default['default'].Component);
     Responsive.displayName = "Responsive(" + (Component.displayName || Component.name) + ")";
+    Responsive.defaultProps = {
+      innerRef: function innerRef() {}
+    };
     return Responsive;
   };
 }

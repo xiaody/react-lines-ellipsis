@@ -89,7 +89,6 @@ var LinesEllipsis = /*#__PURE__*/function (_React$PureComponent) {
   function LinesEllipsis(props) {
     var _this;
     _this = _React$PureComponent.call(this, props) || this;
-    _this.props = _extends({}, defaultProps, props);
     _this.state = {
       text: props.text,
       clamped: false
@@ -224,16 +223,17 @@ var LinesEllipsis = /*#__PURE__*/function (_React$PureComponent) {
       trimRight = _this$props.trimRight,
       className = _this$props.className,
       rest = _objectWithoutPropertiesLoose(_this$props, _excluded);
-    return /*#__PURE__*/React__default["default"].createElement(Component, _extends({
+    return /*#__PURE__*/React__default['default'].createElement(Component, _extends({
       className: "LinesEllipsis " + (clamped ? 'LinesEllipsis--clamped' : '') + " " + className,
       ref: function ref(node) {
         return _this3.target = node;
       }
-    }, omit(rest, usedProps)), clamped && trimRight ? text.replace(/[\s\uFEFF\xA0]+$/, '') : text, /*#__PURE__*/React__default["default"].createElement("wbr", null), clamped && /*#__PURE__*/React__default["default"].createElement("span", {
+    }, omit(rest, usedProps)), clamped && trimRight ? text.replace(/[\s\uFEFF\xA0]+$/, '') : text, /*#__PURE__*/React__default['default'].createElement("wbr", null), clamped && /*#__PURE__*/React__default['default'].createElement("span", {
       className: "LinesEllipsis-ellipsis"
     }, ellipsis));
   };
   return LinesEllipsis;
-}(React__default["default"].PureComponent);
+}(React__default['default'].PureComponent);
+LinesEllipsis.defaultProps = defaultProps;
 
 module.exports = LinesEllipsis;

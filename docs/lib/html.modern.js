@@ -117,7 +117,6 @@ const usedProps = Object.keys(defaultProps);
 class HTMLEllipsis extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.props = _extends({}, defaultProps, props);
     this.state = {
       html: props.unsafeHTML,
       clamped: false
@@ -258,4 +257,5 @@ class HTMLEllipsis extends React.PureComponent {
     }));
   }
 }
-export {HTMLEllipsis as default};
+HTMLEllipsis.defaultProps = defaultProps;
+export default HTMLEllipsis;

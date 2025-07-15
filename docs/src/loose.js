@@ -1,13 +1,6 @@
 import React from "../_snowpack/pkg/react.js";
-function LinesEllipsisLoose({
-  component: Component = "div",
-  text,
-  lineHeight,
-  maxLine = 1,
-  style = {},
-  overflowFallback = true,
-  ...rest
-}) {
+function LinesEllipsisLoose(props) {
+  const {component: Component, text, lineHeight, maxLine, style, overflowFallback, ...rest} = props;
   const maxLineNumber = +maxLine || 1;
   let usedStyle = {
     ...style,
@@ -30,4 +23,10 @@ function LinesEllipsisLoose({
     style: usedStyle
   }, text);
 }
+LinesEllipsisLoose.defaultProps = {
+  component: "div",
+  maxLine: 1,
+  style: {},
+  overflowFallback: true
+};
 export default LinesEllipsisLoose;

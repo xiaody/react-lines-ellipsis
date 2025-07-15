@@ -138,7 +138,6 @@ var HTMLEllipsis = /*#__PURE__*/function (_React$PureComponent) {
   function HTMLEllipsis(props) {
     var _this;
     _this = _React$PureComponent.call(this, props) || this;
-    _this.props = _extends({}, defaultProps, props);
     _this.state = {
       html: props.unsafeHTML,
       clamped: false
@@ -272,18 +271,19 @@ var HTMLEllipsis = /*#__PURE__*/function (_React$PureComponent) {
       className = _this$props2.className,
       unsafeHTML = _this$props2.unsafeHTML,
       rest = _objectWithoutPropertiesLoose(_this$props2, _excluded);
-    return /*#__PURE__*/React__default["default"].createElement(Component, _extends({
+    return /*#__PURE__*/React__default['default'].createElement(Component, _extends({
       className: "LinesEllipsis " + (clamped ? 'LinesEllipsis--clamped' : '') + " " + className,
       ref: function ref(node) {
         return _this3.target = node;
       }
-    }, omit(rest, usedProps)), /*#__PURE__*/React__default["default"].createElement("div", {
+    }, omit(rest, usedProps)), /*#__PURE__*/React__default['default'].createElement("div", {
       dangerouslySetInnerHTML: {
         __html: clamped ? html : unsafeHTML
       }
     }));
   };
   return HTMLEllipsis;
-}(React__default["default"].PureComponent);
+}(React__default['default'].PureComponent);
+HTMLEllipsis.defaultProps = defaultProps;
 
 module.exports = HTMLEllipsis;

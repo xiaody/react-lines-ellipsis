@@ -22,15 +22,15 @@ function _objectWithoutPropertiesLoose(r, e) {
   return t;
 }
 const _excluded = ["component", "text", "lineHeight", "maxLine", "style", "overflowFallback"];
-function LinesEllipsisLoose(_ref) {
-  let {
-    component: Component = "div",
+function LinesEllipsisLoose(props) {
+  const {
+    component: Component,
     text,
     lineHeight,
-    maxLine = 1,
-    style = {},
-    overflowFallback = true
-  } = _ref, rest = _objectWithoutPropertiesLoose(_ref, _excluded);
+    maxLine,
+    style,
+    overflowFallback
+  } = props, rest = _objectWithoutPropertiesLoose(props, _excluded);
   const maxLineNumber = +maxLine || 1;
   let usedStyle = _extends({}, style, {
     display: "-webkit-box",
@@ -50,4 +50,10 @@ function LinesEllipsisLoose(_ref) {
     style: usedStyle
   }), text);
 }
-export {LinesEllipsisLoose as default};
+LinesEllipsisLoose.defaultProps = {
+  component: "div",
+  maxLine: 1,
+  style: {},
+  overflowFallback: true
+};
+export default LinesEllipsisLoose;

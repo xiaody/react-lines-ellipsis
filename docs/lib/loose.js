@@ -24,18 +24,14 @@ function _objectWithoutPropertiesLoose(r, e) {
 }
 
 var _excluded = ["component", "text", "lineHeight", "maxLine", "style", "overflowFallback"];
-function LinesEllipsisLoose(_ref) {
-  var _ref$component = _ref.component,
-    Component = _ref$component === void 0 ? 'div' : _ref$component,
-    text = _ref.text,
-    lineHeight = _ref.lineHeight,
-    _ref$maxLine = _ref.maxLine,
-    maxLine = _ref$maxLine === void 0 ? 1 : _ref$maxLine,
-    _ref$style = _ref.style,
-    style = _ref$style === void 0 ? {} : _ref$style,
-    _ref$overflowFallback = _ref.overflowFallback,
-    overflowFallback = _ref$overflowFallback === void 0 ? true : _ref$overflowFallback,
-    rest = _objectWithoutPropertiesLoose(_ref, _excluded);
+function LinesEllipsisLoose(props) {
+  var Component = props.component,
+    text = props.text,
+    lineHeight = props.lineHeight,
+    maxLine = props.maxLine,
+    style = props.style,
+    overflowFallback = props.overflowFallback,
+    rest = _objectWithoutPropertiesLoose(props, _excluded);
   var maxLineNumber = +maxLine || 1;
   var usedStyle = _extends({}, style, {
     display: '-webkit-box',
@@ -51,9 +47,15 @@ function LinesEllipsisLoose(_ref) {
       overflow: 'hidden'
     });
   }
-  return /*#__PURE__*/React__default["default"].createElement(Component, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(Component, _extends({}, rest, {
     style: usedStyle
   }), text);
 }
+LinesEllipsisLoose.defaultProps = {
+  component: 'div',
+  maxLine: 1,
+  style: {},
+  overflowFallback: true
+};
 
 module.exports = LinesEllipsisLoose;

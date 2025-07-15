@@ -51,41 +51,41 @@ function baseTrim(string) {
 var _baseTrim = baseTrim;
 var Symbol = _root.Symbol;
 var _Symbol = Symbol;
-var objectProto$1 = Object.prototype;
-var hasOwnProperty = objectProto$1.hasOwnProperty;
-var nativeObjectToString$1 = objectProto$1.toString;
-var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : void 0;
+var objectProto = Object.prototype;
+var hasOwnProperty = objectProto.hasOwnProperty;
+var nativeObjectToString = objectProto.toString;
+var symToStringTag = _Symbol ? _Symbol.toStringTag : void 0;
 function getRawTag(value) {
-  var isOwn = hasOwnProperty.call(value, symToStringTag$1), tag = value[symToStringTag$1];
+  var isOwn = hasOwnProperty.call(value, symToStringTag), tag = value[symToStringTag];
   try {
-    value[symToStringTag$1] = void 0;
+    value[symToStringTag] = void 0;
     var unmasked = true;
   } catch (e) {
   }
-  var result = nativeObjectToString$1.call(value);
+  var result = nativeObjectToString.call(value);
   if (unmasked) {
     if (isOwn) {
-      value[symToStringTag$1] = tag;
+      value[symToStringTag] = tag;
     } else {
-      delete value[symToStringTag$1];
+      delete value[symToStringTag];
     }
   }
   return result;
 }
 var _getRawTag = getRawTag;
-var objectProto = Object.prototype;
-var nativeObjectToString = objectProto.toString;
+var objectProto$1 = Object.prototype;
+var nativeObjectToString$1 = objectProto$1.toString;
 function objectToString(value) {
-  return nativeObjectToString.call(value);
+  return nativeObjectToString$1.call(value);
 }
 var _objectToString = objectToString;
 var nullTag = "[object Null]", undefinedTag = "[object Undefined]";
-var symToStringTag = _Symbol ? _Symbol.toStringTag : void 0;
+var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : void 0;
 function baseGetTag(value) {
   if (value == null) {
     return value === void 0 ? undefinedTag : nullTag;
   }
-  return symToStringTag && symToStringTag in Object(value) ? _getRawTag(value) : _objectToString(value);
+  return symToStringTag$1 && symToStringTag$1 in Object(value) ? _getRawTag(value) : _objectToString(value);
 }
 var _baseGetTag = baseGetTag;
 function isObjectLike(value) {
@@ -207,16 +207,11 @@ function debounce(func, wait, options) {
 var debounce_1 = debounce;
 const _excluded = ["innerRef"];
 const isBrowser = typeof window !== "undefined";
-const defaultProps = {
-  innerRef: () => {
-  }
-};
 function responsiveHOC(wait = 150, debounceOptions) {
   return (Component) => {
     class Responsive extends React.Component {
       constructor(props) {
         super(props);
-        this.props = _extends({}, defaultProps, props);
         this.state = {
           winWidth: isBrowser ? window.innerWidth : 0
         };
@@ -244,7 +239,11 @@ function responsiveHOC(wait = 150, debounceOptions) {
       }
     }
     Responsive.displayName = `Responsive(${Component.displayName || Component.name})`;
+    Responsive.defaultProps = {
+      innerRef() {
+      }
+    };
     return Responsive;
   };
 }
-export {responsiveHOC as default};
+export default responsiveHOC;
